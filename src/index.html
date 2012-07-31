@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My AIESEC</title>
+  <link type="text/css" rel="stylesheet" href="css/bootstrap.css">        
+  <link type="text/css" rel="stylesheet" href="css/aiesec.css">        
+</head>
+<body>
+  <div id="aiesec-container">
+    <div class="navbar" data-bind="with: menu">
+      <div class="navbar-inner">
+        <div class="container">                    
+          <div class="nav-collapse collapse">
+            <ul class="nav" data-bind="foreach: components">
+              <li data-bind="click: $root.loadComponent">              
+                <a href="#" data-bind="text: name">COMPONENT</a>              
+              </li>           
+              <li class="divider-vertical"></li>            
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" data-bind="with: component">    
+      <section>
+        <div class="row"> 
+
+          <!-- ko if: id() == 'aiesec_home' -->
+          <div data-bind="template: {name: 'aiesecTemplate', data: $data}"></div>        
+          <!-- /ko -->           
+
+          <!-- ko if: id() == 'aiesec_tn_search_tool' -->        
+          <div id="tnSearchTool" data-bind="template: {name: 'bootstrapSearchTNtemplate', data: $data}"></div>
+          <!-- /ko -->   
+        </div>      
+      </section> 
+    </div>
+  </div>
+</body>
+<script src="js/vendor/jquery.min.js"></script>
+<script src="js/vendor/knockout.js"></script>
+
+<!-- MyAIESEC API Parser -->
+<script src="js/libs/aiesec/api/api.js"></script>
+<!-- MyAIESEC API Parser -->
+
+<!-- TN Search Tool Libraries -->
+<script src="js/libs/aiesec/tnSearchTool/filterSearch.js"></script>
+<script src="js/libs/aiesec/tnSearchTool/bootstrapSearchTN.js"></script>
+<script type="text/html" id="bootstrapSearchTNtemplate"></script>
+<!-- TN Search Tool Libraries -->
+
+<!-- AIESEC Chrome Extension -->
+<script src="js/libs/aiesec/viewModel.js"></script>
+<script src="js/bootstrap.js"></script>
+<script type="text/html" id="aiesecTemplate"></script>
+<!-- AIESEC Chrome Extension -->
+
+
+
+</html>
