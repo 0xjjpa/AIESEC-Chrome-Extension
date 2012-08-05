@@ -4,14 +4,14 @@
       <div class="control-group">                
         <label class="control-label" for="tn-search-scope">Select Range</label>
         <div class="controls">                  
-          <select id="tn-search-scope" data-bind="options: searchScope, optionsText: 'name', optionsValue: 'scopeValue', value: selectedScope"></select>          
+          <select id="tn-search-scope" data-bind="options: searchScopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: selectedScope"></select>          
         </div>
       </div>
       <div class="control-group" data-bind="with:selectedScope">                
         <!-- ko if:$parent.selectedScopeHasSubscope -->
         <label class="control-label" for="tn-search-subscope">Select Committee</label>
         <div class="controls">
-        <select id="tn-search-subscope" data-bind="options: $parent.searchSubscope, optionsText: 'name', optionsValue: 'scopeValue', value: $parent.selectedSubscope"></select>     
+        <select id="tn-search-subscope" data-bind="options: $parent.searchSubscopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: $parent.selectedSubscope"></select>     
         </div>
         <!-- /ko -->   
       </div>
@@ -33,8 +33,9 @@
           <select id="tn-search-endDuration" data-bind="options: endDurationOptions, value: endDuration"></select>          
         </div>
       </div>
+      <p data-bind="text: ko.toJSON($data)"></p>
       <div class="controls">
-        <button type="submit" class="btn btn-primary">Search</button>        
+        <button type="submit" data-bind="click: submitSearch" class="btn btn-primary">Search</button>        
       </div>
     </div>
   </div>
