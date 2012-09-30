@@ -9,10 +9,11 @@ var aiesec = (function(aiesec, undefined) {
 	* @constructor
 	**/
 	a.popupController = function() {
-
+		var backgroundWindow = chrome.extension.getBackgroundPage();
+		console.log(backgroundWindow);
 	};
 
 
-	return aiesec;
+	return a;
 })(aiesec);
 
