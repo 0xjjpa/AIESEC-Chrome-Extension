@@ -1,4 +1,7 @@
-AIESEC-TN-Search-Tool
-=====================
+# AIESEC TN Look Up Tool
+@by [jjperezaguinaga](http://im.jjperezaguinaga.com)
 
-A google chrome extension aimed for AIESECers in order to search for TN's.
+*Description* Google Chrome extension to help improve the experience of AIESEC Members inside MyAiesec.net.
+
+*Documentation* Documentation is wrote in [YuiDocs](http://yui.github.com/yuidoc/) Syntax. To get docs run:
+	yuidoc .
