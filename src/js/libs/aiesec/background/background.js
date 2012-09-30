@@ -57,6 +57,7 @@ var aiesec = (function(aiesec, undefined) {
 		* @param {Object} event
 		**/
 		var loadPopupContent = function(event) {
+			console.log(event);
 			console.log("Background Received Signal to Set up Popup");
 		};
 

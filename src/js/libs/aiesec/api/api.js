@@ -93,5 +93,5 @@ var aiesec = (function(aiesec, undefined) {
 		return self;
 	}
 
-	return aiesec;
+	return a;
 })(aiesec)

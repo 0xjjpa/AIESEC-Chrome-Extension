@@ -11,13 +11,10 @@
   "background" : {
     "page": "background.html"
     },
-  "sandbox": {
-      "pages": ["index.html"]
-    },
   "page_action": {
       "default_icon": "img/icon-19.png",
       "default_title": "MyAIESEC",
-      "default_popup": "popup.html"
+      "default_popup": "index.html"
       },  
   "permissions" : [
       "tabs",
