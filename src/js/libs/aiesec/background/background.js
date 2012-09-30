@@ -84,7 +84,7 @@ var aiesec = (function(aiesec, undefined) {
 			window.addEventListener('message', loadPopupContent);	
 			return pg;
 		};
-		
+
 		return pg.init();
 	};
 
