@@ -10,7 +10,7 @@ var aiesec = (function(aiesec, undefined) {
 	**/
 	a.popupController = function() {
 		var backgroundWindow = chrome.extension.getBackgroundPage();
-		console.log(backgroundWindow);
+		console.log(backgroundWindow.aiesec);
 	};
 
 

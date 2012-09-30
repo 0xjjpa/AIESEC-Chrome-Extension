@@ -11,7 +11,7 @@ var aiesec = (function(aiesec, undefined) {
 	* @property regexAIESEC
 	* @type {RegExp}
 	* @private
-	* @for aiesec
+	* @default /http:\/\/www.myaiesec.net\//
 	**/
 	var regexAIESEC = new RegExp(/http:\/\/www.myaiesec.net\//);
 
@@ -19,7 +19,6 @@ var aiesec = (function(aiesec, undefined) {
 	* Listener for Displaying the Extension Page Action when the Tab is updated.
 	* @private
 	* @event displayPageAction
-	* @for aiesec
 	* @param {Number} tabId 
 	* @param {Object} changeInfo
 	* @param {Object} tab
@@ -37,7 +36,6 @@ var aiesec = (function(aiesec, undefined) {
 	* @method init
 	* @chainable
 	* @return {Object} Instance of Aiesec Class
-	* @for aiesec	
 	**/
 	a.init = function() {
 		chrome.tabs.onUpdated.addListener(displayPageAction);
@@ -53,13 +51,41 @@ var aiesec = (function(aiesec, undefined) {
 		var pg = {};
 
 		/**
+		* Callback function that loads received content from a Message Listener
+		* @private
+		* @event loadPopupContent
+		* @param {Object} event
+		**/
+		var loadPopupContent = function(event) {
+			console.log("Background Received Signal to Set up Popup");
+		};
+
+		/**
 		* Chrome Extension Bootstrap for Popup. Loads logic from Sandboxed HTML for eval-safe use into Popup.
 		* @event loadBoostrap
 		* @namespace backgroundPageController
 		**/
 		pg.loadBootstrap = function() {
+			var iframe = document.getElementById("aiesec-frame");
+			var data = {
+				command: "render"
+			};
 
+			iframe.contentWindow.postMessage(data, "*");
 		};
+
+		/** 
+		* Background Page Init Constructor. Sets up the Background Page Window Listener for the Message Event
+		* @method init
+		* @chainable 
+		* @return {Object} Instance of Background Page Controller Class
+		**/
+		pg.init = function() {
+			window.addEventListener('message', loadPopupContent);	
+			return pg;
+		};
+		
+		return pg.init();
 	};
 
 	return a.init();
