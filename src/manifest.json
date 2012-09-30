@@ -1,7 +1,7 @@
 {
-  "name": "AIESEC TN Search Tool",
-  "version": "0.1",
-  "manifest_version": 1,
+  "name": "AIESEC TN Search App",
+  "version": "0.1.2",
+  "manifest_version": 2,
   "description": "A simple TN Search Tool in order to optimize the process of searching for TN's",  
   "content_scripts" : [{
     "matches" : ["http://www.myaiesec.net/*"],    
@@ -9,21 +9,25 @@
     "run_at" : "document_end"
   }],
   "background" : {
-    "scripts": ["js/background.js"]
+    "page": "background.html"
+    },
+  "sandbox": {
+      "pages": ["index.html"]
     },
   "page_action": {
       "default_icon": "img/icon-19.png",
       "default_title": "MyAIESEC",
-      "default_popup": "index.html"
+      "default_popup": "popup.html"
       },  
   "permissions" : [
       "tabs",
       "unlimitedStorage",
+      "background",
       "http://www.myaiesec.net/*"      
       ],
   "icons" : {
         "48" : "img/icon-48.png",
         "128" : "img/icon-128.png"
       },
-  "content_security_policy": "default-src  'self' 'unsafe-eval';"
+  "content_security_policy": "script-src 'self' https://myaiesec.net; object-src 'self'"
 }
