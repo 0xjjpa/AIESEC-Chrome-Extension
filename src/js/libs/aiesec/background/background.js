@@ -19,7 +19,7 @@ var aiesec = (function(aiesec, undefined) {
 	* Listener for Displaying the Extension Page Action when the Tab is updated.
 	* @private
 	* @event displayPageAction
-	* @param {Number} tabId 
+	* @param {Number} tabId
 	* @param {Object} changeInfo
 	* @param {Object} tab
 	**/
@@ -75,14 +75,14 @@ var aiesec = (function(aiesec, undefined) {
 			iframe.contentWindow.postMessage(data, "*");
 		};
 
-		/** 
+		/**
 		* Background Page Init Constructor. Sets up the Background Page Window Listener for the Message Event
 		* @method init
-		* @chainable 
+		* @chainable
 		* @return {Object} Instance of Background Page Controller Class
 		**/
 		pg.init = function() {
-			window.addEventListener('message', loadPopupContent);	
+			window.addEventListener('message', loadPopupContent);
 			return pg;
 		};
 
