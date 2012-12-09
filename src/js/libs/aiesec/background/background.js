@@ -26,10 +26,26 @@ var aiesec = (function(aiesec, undefined) {
 	var displayPageAction = function (tabId, changeInfo, tab) {
 		var match = regexAIESEC.exec(tab.url);
 		// We only display the Page Action if we are inside a MyAIESEC Tab.
-		if(match) {
-			chrome.pageAction.show(tab.id);
+		if(match && changeInfo.status == 'complete') {
+			//We send the proper information to the content script to render our app.
+			 chrome.tabs.sendMessage(tab.id, {load: true}, function(response) {
+			 	if(response) {
+			 		console.log("Inside Background Response script, reading content response:");
+			 		console.log(response);
+			 		//After successfully getting the response, we show the Page Action Icon.
+    				chrome.pageAction.show(tab.id);		
+			 	}
+  			});
 		}
 	};
+
+	var messageListener = function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.greeting == "hello")
+      sendResponse({farewell: "goodbye"});
+  	}
 
 	/**
 	* AIESEC Module Init Constructor for Background Page Logic. Sets up Chrome Listener for Background Page.
@@ -39,6 +55,7 @@ var aiesec = (function(aiesec, undefined) {
 	**/
 	a.init = function() {
 		chrome.tabs.onUpdated.addListener(displayPageAction);
+		chrome.extension.onMessage.addListener(messageListener);
 		return a;
 	};
 

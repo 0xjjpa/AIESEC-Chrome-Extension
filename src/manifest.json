@@ -13,8 +13,7 @@
     },
   "page_action": {
       "default_icon": "img/icon-19.png",
-      "default_title": "MyAIESEC",
-      "default_popup": "index.html"
+      "default_title": "MyAIESEC"
       },  
   "permissions" : [
       "tabs",
