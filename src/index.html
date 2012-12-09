@@ -26,14 +26,7 @@
     <div class="container" data-bind="with: component">    
       <section>
         <div class="row"> 
-
-          <!-- ko if: id() == 'aiesec_home' -->
-          <div data-bind="template: {name: 'aiesecTemplate', data: $data}"></div>        
-          <!-- /ko -->           
-
-          <!-- ko if: id() == 'aiesec_tn_search_tool' -->        
-          <div id="tnSearchTool" data-bind="template: {name: 'bootstrapSearchTNtemplate', data: $data}"></div>
-          <!-- /ko -->   
+          <div data-bind="attr: {id: 'cssId'}, template: {name: selectedTemplate, data: $data}"></div>
         </div>      
       </section> 
     </div>
