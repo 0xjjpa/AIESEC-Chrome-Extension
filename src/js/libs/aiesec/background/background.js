@@ -19,12 +19,12 @@ var aiesec = (function(aiesec, undefined) {
 	* Listener for Displaying the Extension Page Action when the Tab is updated.
 	* @private
 	* @event displayPageAction
-	* @param {Number} tabId
-	* @param {Object} changeInfo
-	* @param {Object} tab
+	* @param {Number} tabId The tabId given by the tabs listener to know which tab was updated.
+	* @param {Object} changeInfo The current status of the tab.
+	* @param {Object} tab The metadata of the tab.
 	**/
 	var displayPageAction = function (tabId, changeInfo, tab) {
-		var match = regexAIESEC.exec(tab.url);
+		var match = regexAIESEC.exec(tab.url); // var regexAIESEC = new RegExp(/http:\/\/www.myaiesec.net\//);
 		// We only display the Page Action if we are inside a MyAIESEC Tab.
 		if(match && changeInfo.status == 'complete') {
 			//We send the proper information to the content script to render our app.
