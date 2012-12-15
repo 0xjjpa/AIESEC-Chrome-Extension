@@ -43,8 +43,8 @@ This research has been done for the last 4 months, in order to evaluate the curr
 
 ## Table of contents
 
-* [contentscope.do](#content)
-* [browseintern.do](#scope)
+* [contentscope.do](#-exchangecontentscopedo)
+* [browseintern.do](#-exchangebrowseinterndo)
 
 This queries can be performind inside the system through the following commands:
 
