@@ -74,6 +74,7 @@ var aiesec = (function(aiesec, undefined) {
 
 		self.loadComponent = function(component) {
 			self.component(component);
+			$("select").chosen();
 			return true;
 		};
 

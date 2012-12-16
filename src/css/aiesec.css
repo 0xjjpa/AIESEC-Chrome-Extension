@@ -1,2 +1,37 @@
-#aiesec-container{width:780px}#aiesec-container .container{width:780px}#aiesec-container .navbar{margin-bottom:5px}#aiesec-container .first{margin-left:25px}#aiesec-container .last{margin-left:10px}#aiesec-container .thumbnail.main{height:400px;overflow-y:scroll;margin-bottom:5px}#aiesec-container .thumbnail{margin-bottom:4px}#aiesec-container .hero-unit{margin-bottom:0}#tnSearchTool .span4{width:255px}#tnSearchTool .span4 .thumbnail{width:255px;overflow-y:scroll}#tnSearchTool .span6{width:506px}
-/* This beautiful CSS-File has been crafted with LESS (lesscss.org) and compiled by simpLESS (wearekiss.com/simpless) */
+#aiesec-container {
+  width: 780px;
+}
+#aiesec-container .container {
+  width: 780px;
+}
+#aiesec-container .navbar {
+  margin-bottom: 5px;
+}
+#aiesec-container .first {
+  margin-left: 25px;
+  padding-left: 5px;
+}
+#aiesec-container .last {
+  margin-left: 10px;
+}
+#aiesec-container .thumbnail.main {
+  height: 400px;
+  overflow-y: scroll;
+  margin-bottom: 5px;
+}
+#aiesec-container .thumbnail {
+  margin-bottom: 4px;
+}
+#aiesec-container .hero-unit {
+  margin-bottom: 0px;
+}
+#tnSearchTool .span4 {
+  width: 255px;
+}
+#tnSearchTool .span4 .thumbnail {
+  width: 255px;
+  overflow-y: scroll;
+}
+#tnSearchTool .span6 {
+  width: 506px;
+}

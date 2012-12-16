@@ -26,5 +26,5 @@
         "48" : "img/icon-48.png",
         "128" : "img/icon-128.png"
       },
-  "content_security_policy": "script-src 'self' https://myaiesec.net; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

@@ -4,36 +4,36 @@
       <div class="control-group">                
         <label class="control-label" for="tn-search-scope">Select Range</label>
         <div class="controls">                  
-          <select id="tn-search-scope" data-bind="options: searchScopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: selectedScope"></select>          
+          <select id="tn-search-scope" data-bind="options: searchScopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: selectedScope, chosen: true"></select>          
         </div>
       </div>
       <div class="control-group" data-bind="with:selectedScope">                
         <!-- ko if:$parent.selectedScopeHasSubscope -->
         <label class="control-label" for="tn-search-subscope">Select Committee</label>
         <div class="controls">
-        <select id="tn-search-subscope" data-bind="options: $parent.searchSubscopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: $parent.selectedSubscope"></select>     
+        <select id="tn-search-subscope" data-bind="options: $parent.searchSubscopeOptions, optionsText: 'name', optionsValue: 'scopeValue', value: $parent.selectedSubscope, chosen: true"></select>     
         </div>
         <!-- /ko -->   
       </div>
       <div class="control-group">                
         <label class="control-label" for="tn-search-exchange">Select Type of Exchange</label>
         <div class="controls">                  
-          <select id="tn-search-exchange" data-bind="options: typeOfInternship, value: selectedTypeOfExchange"></select>          
+          <select id="tn-search-exchange" data-bind="options: typeOfInternship, value: selectedTypeOfExchange, chosen: true"></select>          
         </div>
       </div>
       <div class="control-group">                
         <label class="control-label" for="tn-search-startDuration">Select Minimum Duration (Weeks)</label>
         <div class="controls">                  
-          <select id="tn-search-startDuration" data-bind="options: startDurationOptions, value: startDuration"></select>          
+          <select id="tn-search-startDuration" data-bind="options: startDurationOptions, value: startDuration, chosen: true"></select>          
         </div>
       </div>
       <div class="control-group">                
         <label class="control-label" for="tn-search-endDuration">Select Maximum Duration (Weeks)</label>
         <div class="controls">                  
-          <select id="tn-search-endDuration" data-bind="options: endDurationOptions, value: endDuration"></select>          
+          <select id="tn-search-endDuration" data-bind="options: endDurationOptions, value: endDuration, chosen: true"></select>          
         </div>
       </div>
-      <p data-bind="text: ko.toJSON($data)"></p>
+      <!--<p data-bind="text: ko.toJSON($data)"></p>-->
       <div class="controls">
         <button type="submit" data-bind="click: submitSearch" class="btn btn-primary">Search</button>        
       </div>
