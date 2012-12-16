@@ -146,7 +146,7 @@ Current Requests: [1,2,3,4,...,48,49,50]
 [On research]
 
 #### countrycode
-[On research] It seems this countrycode is different than the contentscope.do uses, you can't browse by country only, buy need a subid too. 
+[On research] It seems this countrycode is different than the contentscope.do uses, you can't browse by country only, buy need a subid too. Instead, the key regions is being used. 
 
 
 # Appendix A: Parser Codes
@@ -193,4 +193,71 @@ var params = {
 	data: POSTdata,
 	type: "POST"				
 }
+
+jQuery.ajax(params);
+```
+
+## Retrieve skills from [Browse Intern Page](http://www.myaiesec.net/exchange/browseintern.do?operation=BrowseInternSearch&program=browse)
+
+```javascript
+var skills = jQuery("#skillsFilter").find("td").has("input");
+var skillsObject = {};
+jQuery.each(skills, function(i,v) { var skill = jQuery(v); var skillName = skill.text().trim(); var skillValue = skill.find("input").val(); skillsObject[skillName] = skillValue; })
+console.log(JSON.stringify(skillsObject));
+```
+
+## Retrieve backgrounds from [Browse Intern Page](http://www.myaiesec.net/exchange/browseintern.do?operation=BrowseInternSearch&program=browse)
+
+```javascript
+var backgrounds = jQuery("#backgroundFilter").find("td").has("input");
+var backgroundsObject = {};
+jQuery.each(backgrounds, function(i,v) { var background = jQuery(v); var backgroundName = background.text().trim(); var backgroundValue = background.find("input").val(); backgroundsObject[backgroundName] = backgroundValue; })
+console.log(JSON.stringify(backgroundsObject));
+```
+
+## Parse Results from [Browse Intern Page](http://www.myaiesec.net/exchange/browseintern.do?operation=BrowseInternSearch&program=browse)
+
+```javascript
+var POSTdata  = {
+	statusid:9,
+	buttontype:null,
+	countrycode:null,
+	orgsearchtext:null,
+	date_from:"15.06.2012",
+	date_to:"15.06.2013",
+	questiontext:null,
+	browsetype:"tn",
+	xchangetype:0,
+	tncode:null,
+	getTN:"gepTN",
+	status:-1,
+	duration_from:6,
+	duration_to:78
+}
+
+var GETdata  = "?operation=BrowseInternSearchResult&page=1&program=browse"
+var URL = "/exchange/browseintern.do"
+
+var successBrowseQuery = function(response) {
+	
+	var dom = jQuery(new DOMParser().parseFromString(response, 'text/html'));
+	var results = dom.find(".resulttableClass");
+	console.log(results);
+	var filteredActualResults = results.find("tr").filter(function(){ console.log(jQuery(this)); return jQuery(this).children().length === 3 });
+
+	jQuery.each(filteredActualResults, function(i, v) {
+		jQuery.each(jQuery(v).find("a"), function(j, u) {
+			console.log(jQuery(u).val());
+		})
+	});
+}
+
+var params = {
+	url: "http://www.myaiesec.net"+URL+GETdata,
+	data: POSTdata,
+	type: "POST",
+	success: successBrowseQuery		
+}
+
+jQuery.ajax(params);
 ```
