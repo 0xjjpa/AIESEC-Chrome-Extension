@@ -17,6 +17,15 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
+		self.parseObjectNationalList = function(html) {
+			var dom = $('<html>').html(html);
+			var parsedObject = {};
+			$.each(dom.find('select option'), function(i, v) {
+				parsedObject[$(v).val()] = $(v).html();
+			});
+			return parsedObject;
+		}
+
 		self.parseNationalList = function(html) {
 			var dom = $('<html>').html(html);
 			var parsedResult = [];

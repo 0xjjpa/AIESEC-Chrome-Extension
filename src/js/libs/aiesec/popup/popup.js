@@ -10,9 +10,9 @@ var aiesec = (function(aiesec, undefined) {
 	**/
 	a.popupController = function() {
 		var backgroundWindow = chrome.extension.getBackgroundPage();
-		var backgroundPageController = backgroundWindow.aiesec.backgroundPageController();
-		console.log('Loading Bootstrap');
-		backgroundPageController.loadBootstrap();
+		//var backgroundPageController = backgroundWindow.aiesec.backgroundPageController();
+		//console.log('Loading Bootstrap');
+		//backgroundPageController.loadBootstrap();
 	};
 
 
