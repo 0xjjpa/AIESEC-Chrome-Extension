@@ -50,12 +50,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 					console.log(match);
 				}
 				
-				//sendResponse({content: "Content received message, up and running."})
-				/*
-				chrome.tabs.getCurrent(function(tab) {
-					console.log(tab);
-				})
-				*/
 			return false;
 			break;
 		}
