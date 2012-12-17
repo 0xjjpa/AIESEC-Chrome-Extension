@@ -30,8 +30,7 @@ var aiesec = (function(aiesec, undefined) {
 			//We send the proper information to the content script to render our app.
 			 chrome.tabs.sendMessage(tab.id, {load: true}, function(response) {
 			 	if(response) {
-			 		console.log("Inside Background Response script, reading content response:");
-			 		console.log(response);
+			 		console.log("Completed response from Content Script");
 			 		//After successfully getting the response, we show the Page Action Icon.
     				chrome.pageAction.show(tab.id);		
 			 	}

@@ -6,12 +6,14 @@ $(document).ready(function() {
 	});
 	
 
-	
 	var AIESECViewModel = new aiesec.viewModel();
 	
+	// We REALLY need to find a better way to organize this...
 	$("#aiesecTemplate").load('js/libs/aiesec/aiesecTemplate.html', function() {
 		$("#bootstrapSearchTNtemplate").load('js/libs/aiesec/tnSearchTool/tnSearchToolTemplate.html', function() {
-			ko.applyBindings(AIESECViewModel);
+			$("#bootstrapChattemplate").load('js/libs/aiesec/chat/chatTemplate.html', function() {
+				ko.applyBindings(AIESECViewModel);
+			})
 		});
 	});
 	

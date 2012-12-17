@@ -56,6 +56,10 @@ var aiesec = (function(aiesec, undefined) {
 			console.log(areasContainer);
 		}
 
+		self.getProfile = function() {
+			
+		}
+
 		return self;
 	}
 

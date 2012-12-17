@@ -1,0 +1,31 @@
+<div data-bind="with: core">
+<div data-bind="with: chat">
+
+<div class="span3 first">
+  <div class="thumbnail main contacts">
+    <h6>Online AIESECers<small>&nbsp; (NUMBER)</small></h6>
+    <ul>
+      <!-- ko with: myProfile -->
+      <li class="user"><a><img src="http://placehold.it/28x28">
+        <div class="icons"><img src="img/blank.gif" alt="Mexico" class="flag flag-mx">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <circle cx="6" cy="6" r="4" fill="green"></circle>
+          </svg>
+        </div><span data-bind="text:name">NAME</span></a>
+      </li>
+      <!-- /ko -->
+    </ul>
+  </div>
+</div>
+
+<div class="span7 last">
+  <div class="thumbnail main panel"> 
+    <div class="chatPanel"></div>
+    <div class="chatMessage">
+      <input type="text" placeholder="Type your message and press enter. Max 140 chars.">
+    </div>
+  </div>
+</div>
+
+</div>
+</div>

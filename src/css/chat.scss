@@ -1,0 +1,99 @@
+@mixin container {
+	display: block;
+	overflow: hidden;
+	overflow-y: scroll;
+	height: 300px;
+	background-color: #F2F4F8;
+	border-left: 1px solid rgba(0, 0, 0, .4);
+	border-bottom: 1px solid rgba(0, 0, 0, .4);
+	margin-left: 0px;
+	-webkit-background-clip: padding-box;
+	-webkit-box-shadow: inset 2px 0 2px -2px #B2B9C9;
+}
+
+#aiesecChat {
+	.contacts, .rooms {
+		@include container;
+
+		h6 {
+			margin: 0 5px;
+
+		}
+
+		ul {
+			margin: 0px;
+
+			li:hover {
+				background-color: #ddd;
+			}
+
+			li {
+				list-style: none;
+				float: left;
+				width: 98%;
+				padding: 5px;
+				cursor: pointer;
+
+				.icons {
+					float: right;
+					display: inline-block;
+					position: relative;
+					margin-right: 30px;
+				}
+
+				a:hover {
+					text-decoration: none;
+				}
+
+				img {
+					display: inline-block;
+				}
+
+				img.flag {
+					float:right;
+					margin-top: 8px;
+				}
+
+				span {
+					font-size: .8em;
+					color: #111;
+					display: inline-block;
+					white-space: nowrap;
+					width: 100px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+
+				}
+
+				svg {
+					display: inline-block;
+					position: relative;
+					float: right;
+					margin-top: 8px;
+					margin-right: 8px;
+					width: 10px;
+					height: 10px;
+				}
+			}
+			
+		}
+	}
+
+	.panel {
+		@include container;
+		border-right: 1px solid rgba(0, 0, 0, .4);
+		.chatPanel {
+			height: 340px;
+			width: 95%;
+			margin: 5px;
+			background-color: white;
+			overflow-y: scroll;
+		}
+		.chatMessage {
+			margin: 5px;
+			input {
+				width: 95%;	
+			}
+		}
+	}
+}

@@ -1,0 +1,73 @@
+#aiesecChat .contacts, #aiesecChat .rooms {
+  display: block;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 300px;
+  background-color: #F2F4F8;
+  border-left: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  margin-left: 0px;
+  -webkit-background-clip: padding-box;
+  -webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9; }
+  #aiesecChat .contacts h6, #aiesecChat .rooms h6 {
+    margin: 0 5px; }
+  #aiesecChat .contacts ul, #aiesecChat .rooms ul {
+    margin: 0px; }
+    #aiesecChat .contacts ul li:hover, #aiesecChat .rooms ul li:hover {
+      background-color: #ddd; }
+    #aiesecChat .contacts ul li, #aiesecChat .rooms ul li {
+      list-style: none;
+      float: left;
+      width: 98%;
+      padding: 5px;
+      cursor: pointer; }
+      #aiesecChat .contacts ul li .icons, #aiesecChat .rooms ul li .icons {
+        float: right;
+        display: inline-block;
+        position: relative;
+        margin-right: 30px; }
+      #aiesecChat .contacts ul li a:hover, #aiesecChat .rooms ul li a:hover {
+        text-decoration: none; }
+      #aiesecChat .contacts ul li img, #aiesecChat .rooms ul li img {
+        display: inline-block; }
+      #aiesecChat .contacts ul li img.flag, #aiesecChat .rooms ul li img.flag {
+        float: right;
+        margin-top: 8px; }
+      #aiesecChat .contacts ul li span, #aiesecChat .rooms ul li span {
+        font-size: .8em;
+        color: #111;
+        display: inline-block;
+        white-space: nowrap;
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis; }
+      #aiesecChat .contacts ul li svg, #aiesecChat .rooms ul li svg {
+        display: inline-block;
+        position: relative;
+        float: right;
+        margin-top: 8px;
+        margin-right: 8px;
+        width: 10px;
+        height: 10px; }
+#aiesecChat .panel {
+  display: block;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 300px;
+  background-color: #F2F4F8;
+  border-left: 1px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  margin-left: 0px;
+  -webkit-background-clip: padding-box;
+  -webkit-box-shadow: inset 2px 0 2px -2px #b2b9c9;
+  border-right: 1px solid rgba(0, 0, 0, 0.4); }
+  #aiesecChat .panel .chatPanel {
+    height: 340px;
+    width: 95%;
+    margin: 5px;
+    background-color: white;
+    overflow-y: scroll; }
+  #aiesecChat .panel .chatMessage {
+    margin: 5px; }
+    #aiesecChat .panel .chatMessage input {
+      width: 95%; }

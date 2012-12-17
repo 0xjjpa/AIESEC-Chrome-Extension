@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>My AIESEC</title>
+  <link type="text/css" rel="stylesheet" href="css/chat.css">        
   <link type="text/css" rel="stylesheet" href="css/bootstrap.css">        
   <link type="text/css" rel="stylesheet" href="css/aiesec.css">        
   <link type="text/css" rel="stylesheet" href="css/chosen.css">        
+  <link type="text/css" rel="stylesheet" href="css/flags.css">        
 </head>
 <body>
   <div id="aiesec-container">
@@ -27,13 +29,14 @@
     <div class="container" data-bind="with: component">    
       <section>
         <div class="row"> 
-          <div data-bind="attr: {id: 'cssId'}, template: {name: selectedTemplate, data: $data}"></div>
+          <div data-bind="attr: {id: cssId}, template: {name: selectedTemplate, data: $data}"></div>
         </div>      
       </section> 
     </div>
   </div>
 </body>
 <script src="js/vendor/jquery.min.js"></script>
+<script src="js/vendor/firebase.js"></script>
 <script src="js/vendor/knockout.js"></script>
 <script src="js/vendor/chosen.jquery.min.js"></script>
 
@@ -42,6 +45,12 @@
 <!-- MyAIESEC API Parser -->
 <script src="js/libs/aiesec/api/api.js"></script>
 <!-- MyAIESEC API Parser -->
+
+<!-- AIESEC Chat Libraries -->
+<script src="js/libs/aiesec/chat/chat.js"></script>
+<script src="js/libs/aiesec/chat/bootstrapChat.js"></script>
+<script type="text/html" id="bootstrapChattemplate"></script>
+<!-- AIESEC CHat Libraries -->
 
 <!-- TN Search Tool Libraries -->
 <script src="js/libs/aiesec/tnSearchTool/filterSearch.js"></script>
