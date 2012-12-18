@@ -29,7 +29,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 				parserRequest.success = function(data) {
 					var result = parser.parseNationalList(data);
-					sendResponse(result);   
+					sendResponse(result);
 				};
 
 				parserRequest.error = function(data) {
@@ -71,16 +71,36 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 				* NOTE: This was never implemented. It was left here as a proof of all scenarios were considered and as
 				* example of how a Chrome Extension can have a security vulnerability.
+				*
+				* So enough with the lecture, there's actually one way to do this. We query the actual IP and parse the result;
+				* a proper whois to the aiesec domain show us that the A host is 195.219.251.154, so we are going to use that.
+				* (We need to add that as part of the permission url in order to allow the Cross-Origin-Policy)
+				*
+				* The request is a normal query to the stagehome.do url, which in case the user was not validated, returns a page
+				* with the legend your session has expired.
+				*
+				* NOTE: Is there a way to break this? Not sure, I imagine that through some sort of IP spoofing and some routing network magic
+				* it can be done. The proper way would be to have some handshake with the server, some token through an Oauth2 REST service but
+				* hey, life is not always happy is it?
+				*
 				*/
 
-				
+				parserRequest.success = function(data) {
+					var result = parser.getProfile(data);
+					sendResponse(result);
+				};
 
+				parserRequest.error = function(data) {
+					console.log("ERROR");
+					console.log(data);
+					var jxhr = data;
+				};
 				
-			return false;
 			break;
 		}
 
 		// We fire the request
 		if(parserRequest.success && parserRequest.error) jQuery.ajax(parserRequest);
+		return true;
 	}
 });

@@ -18,7 +18,7 @@ var aiesec = (function(aiesec, undefined) {
 		var $ = jQuery;
 
 		self.parseObjectNationalList = function(html) {
-			var dom = $('<html>').html(html);
+			var dom = $('<html>').html(html); // Warning, will eval any content
 			var parsedObject = {};
 			$.each(dom.find('select option'), function(i, v) {
 				parsedObject[$(v).val()] = $(v).html();
@@ -27,7 +27,7 @@ var aiesec = (function(aiesec, undefined) {
 		}
 
 		self.parseNationalList = function(html) {
-			var dom = $('<html>').html(html);
+			var dom = $('<html>').html(html); // Warning, will eval any content
 			var parsedResult = [];
 			$.each(dom.find('select option'), function(i, v) {
 				parsedResult[i] = { scopeValue: $(v).val(), name: $(v).html() };	
@@ -38,7 +38,7 @@ var aiesec = (function(aiesec, undefined) {
 
 
 		self.getAreasList = function(html) {
-			var dom = $('<html>').html(html);
+			var dom = $('<html>').html(html); // Warning, will eval any content
 			
 			var areasTable = dom.find('table.tableClass')[1];
 			var areasList = $(areasTable).find('tr').filter(function(index) { return index != 0 })
@@ -59,10 +59,23 @@ var aiesec = (function(aiesec, undefined) {
 		/**
 		* Retrieves the current logged in information inside the webpage. This is our main mechanism to know whether someone is connected or not.
 		* @method getProfile
-		* @param {String} scriptHtml The script inside every MyAIESEC page that contains the logged in information
+		* @param {String} html The landing MyAIESEC page that contains the logged in information
 		* @return {Object}
 		**/
-		self.getProfile = function(scriptHtml) {
+		self.getProfile = function(html) {
+			/*
+			* Warning! Instead of a plaing html, we are retrieving an entire page that has script tags in it.
+			* By parsing it inside a html object, we are running any script inside.
+			* So instead of
+
+			var dom = $('<html>').html(html);
+			var contentScript = dom.find("script[src='/scripts/common.js']").next().html();
+
+			* We are going to just use the html as plain string and regex all of it.
+			*/
+			
+			contentScript = html;
+
 			/*
 			* Here's our main regular expression; it uses 2 grouping classes, one after support and one after value.
 			* Example: document.getElementById('support_username').value='me@jjperezaguinaga.com';
@@ -74,12 +87,18 @@ var aiesec = (function(aiesec, undefined) {
 			var regex = /document.getElementById\('support_([^\']+)'\)\.value='([^\']+)';/g;
 
 			var match;
-
+			var profile = {}
 			// We find this match multiple times in the html, but we only need the first 8
 			for(var i = 0; i < 8; i++) {
-				match = regex.exec(scriptHtml);
-				console.log(match);
+				match = regex.exec(contentScript);
+				// Showtime! If we don't have a match, it means that we are not logged in, return empty object!
+				if (match) {
+					profile[match[1]] = match[2];	
+				} else {
+					return {};
+				}
 			}
+			return profile;
 		}
 
 		return self;

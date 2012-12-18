@@ -20,7 +20,8 @@
       "tabs",
       "unlimitedStorage",
       "background",
-      "http://www.myaiesec.net/*"      
+      "http://www.myaiesec.net/*",
+      "http://195.219.251.154/*"
       ],
   "icons" : {
         "48" : "img/icon-48.png",

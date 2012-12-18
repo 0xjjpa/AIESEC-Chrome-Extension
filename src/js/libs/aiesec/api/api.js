@@ -104,7 +104,8 @@ var aiesec = (function(aiesec, undefined) {
 		self.getProfile = function(container) {
 			
 			var params = {
-				url: "http://www.myaiesec.net/stagehome.do",
+				//url: "http://www.myaiesec.net/stagehome.do",
+				url: "http://195.219.251.154/stagehome.do",
 				data: {},
 				type: "GET"
 			}
@@ -126,6 +127,7 @@ var aiesec = (function(aiesec, undefined) {
 		self.request = function(request, container) {
 			chrome.tabs.getSelected(null, function(tab) {
 				chrome.tabs.sendMessage(tab.id, request, function(response) {
+					console.log(response);
 					container(response);
 				});					
 			});
