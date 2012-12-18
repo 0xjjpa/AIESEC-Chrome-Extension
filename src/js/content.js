@@ -39,16 +39,42 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			break;
 
 			case "getProfile":
+				// We needa new parser in order to retrieve the information from the content page
+				var parser = new aiesec.parser();
+
+				/*
+				* So here's the thing, we have 2 ways to approach this problem: We can use the current content window,
+				* and assume the user is logged in the page, retrieving the current page and use that.
+				* 
+				* This is a security vulnerability. Why?
+				* The way the Chrome Extension works is reads the url and makes sure you are at MyAIESEC.net, otherwise
+				* it won't trigger itself. However, there's a really easy way to fool that: change the hosts file in any
+				* computer and set up for instance
+				*
+				* 127.0.0.1 myaiesec.net
+				*
+				* Then, the hacker can put any page he/she wants and the Chrome Extension will trigger. Now, assuming the 
+				* hacker can read the parser code, he can put a script in the form that matches my regular expression,
+				* allowing himself/herself to inject into the system, even if he's not part of AIESEC.
+				*
+				* This is the code to do it through this insecure, bad way:
+				*
+
+				//We get the current window document and retrieve the script that contains the logged in data
 				var document = jQuery(window.document);
+
+				// We will do most of the computation here to avoid sending a big amount of information
 				var contentScript = document.find("script[src='/scripts/common.js']").next().html();
 
-				var regex = /document.getElementById\('support_([^\']+)'\)\.value='([^\']+)';/g;
+				var result = parser.getProfile(contentScript);
+				sendResponse(result);
 
-				var match;
-				for(var i = 0; i < 8; i++) {
-					match = regex.exec(contentScript);
-					console.log(match);
-				}
+				* NOTE: This was never implemented. It was left here as a proof of all scenarios were considered and as
+				* example of how a Chrome Extension can have a security vulnerability.
+				*/
+
+				
+
 				
 			return false;
 			break;

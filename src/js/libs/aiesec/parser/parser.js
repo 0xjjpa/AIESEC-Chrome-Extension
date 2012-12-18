@@ -56,8 +56,30 @@ var aiesec = (function(aiesec, undefined) {
 			console.log(areasContainer);
 		}
 
-		self.getProfile = function() {
-			
+		/**
+		* Retrieves the current logged in information inside the webpage. This is our main mechanism to know whether someone is connected or not.
+		* @method getProfile
+		* @param {String} scriptHtml The script inside every MyAIESEC page that contains the logged in information
+		* @return {Object}
+		**/
+		self.getProfile = function(scriptHtml) {
+			/*
+			* Here's our main regular expression; it uses 2 grouping classes, one after support and one after value.
+			* Example: document.getElementById('support_username').value='me@jjperezaguinaga.com';
+			* Our regex matches 3 groups:
+			* a) The entire match (duh)
+			* b) "username"
+			* c) "me@jjperezaguinaga.com"
+			*/
+			var regex = /document.getElementById\('support_([^\']+)'\)\.value='([^\']+)';/g;
+
+			var match;
+
+			// We find this match multiple times in the html, but we only need the first 8
+			for(var i = 0; i < 8; i++) {
+				match = regex.exec(scriptHtml);
+				console.log(match);
+			}
 		}
 
 		return self;
