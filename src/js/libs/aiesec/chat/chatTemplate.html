@@ -6,7 +6,7 @@
     <h6>Online AIESECers<small>&nbsp; (NUMBER)</small></h6>
     <ul>
       <!-- ko with: myProfile -->
-      <li class="user"><a><img src="http://placehold.it/28x28">
+      <li class="user"><a><img data-bind="attr: {src: profileUrl}" src="http://placehold.it/28x28" style="width: 28px; height: 28px;">
         <div class="icons"><img src="img/blank.gif" alt="Mexico" class="flag flag-mx">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
             <circle cx="6" cy="6" r="4" fill="green"></circle>
@@ -20,7 +20,9 @@
 
 <div class="span7 last">
   <div class="thumbnail main panel"> 
-    <div class="chatPanel"></div>
+    <div class="chatPanel">
+      <p data-bind="text: ko.toJSON($data)"></p>
+    </div>
     <div class="chatMessage">
       <input type="text" placeholder="Type your message and press enter. Max 140 chars.">
     </div>

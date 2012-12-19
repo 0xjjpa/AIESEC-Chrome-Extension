@@ -95,9 +95,16 @@ var aiesec = (function(aiesec, undefined) {
 				if (match) {
 					profile[match[1]] = match[2];	
 				} else {
-					return {};
+					return undefined;
 				}
 			}
+
+			var regexImage = /displayAvatar.do\?friendid=(\d+)/g
+			match = regexImage.exec(contentScript);
+			if (match) {
+				profile.friendid = match[1];
+			}
+
 			return profile;
 		}
 

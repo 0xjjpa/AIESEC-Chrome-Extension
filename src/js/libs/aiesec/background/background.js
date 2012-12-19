@@ -5,6 +5,7 @@
 **/
 var aiesec = (function(aiesec, undefined) {
 	var a = aiesec || {};
+	a.tabId = -1;
 
 	/**
 	* Regular Expression that matches the URL to the MyAIESEC Portal
@@ -27,6 +28,8 @@ var aiesec = (function(aiesec, undefined) {
 		var match = regexAIESEC.exec(tab.url); // var regexAIESEC = new RegExp(/http:\/\/www.myaiesec.net\//);
 		// We only display the Page Action if we are inside a MyAIESEC Tab.
 		if(match && changeInfo.status == 'complete') {
+			//We are going to record the tab Id for later uses.
+			a.tabId = tabId;
 			//We send the proper information to the content script to render our app.
 			 chrome.tabs.sendMessage(tab.id, {load: true}, function(response) {
 			 	if(response) {
@@ -76,6 +79,18 @@ var aiesec = (function(aiesec, undefined) {
 			console.log(event);
 			console.log("Background Received Signal to Set up Popup");
 		};
+
+		/**
+		* Method to close the extension in case of unauthorized access.
+		* @event closeExtension
+		**/
+		// @todo Remove this method and implement a proper auth scheme.
+		pg.closeExtension = function() {
+			console.log("Closing extension");
+			var tabId = a.tabId;
+			console.log(tabId);
+			chrome.pageAction.setPopup({tabId: tabId, popup: "forbidden.html"});
+		}
 
 		/**
 		* Chrome Extension Bootstrap for Popup. Loads logic from Sandboxed HTML for eval-safe use into Popup.

@@ -83,6 +83,11 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 				* it can be done. The proper way would be to have some handshake with the server, some token through an Oauth2 REST service but
 				* hey, life is not always happy is it?
 				*
+				* UPDATE: It seems that when requesting directly the IP, MyAIESEC session system doesn't account the request as one
+				* made by a previous client and uses it as a new one. We will use then the URL (myaiesec.net) as a temporal solution
+				* while we solve this problem. We are most likely going to have an internal registration inside the Chat.
+				* @todo Review this vulnerability and check access through IP instead of MyAIESEC.net url.
+				* @todo See the possibility of making a Oauth2 provider that scraps the portal and returns the results throuhg REST.
 				*/
 
 				parserRequest.success = function(data) {
