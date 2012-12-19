@@ -4,16 +4,14 @@
 <div class="span3 first">
   <div class="thumbnail main contacts">
     <h6>Online AIESECers<small>&nbsp; (NUMBER)</small></h6>
-    <ul>
-      <!-- ko with: myProfile -->
+    <ul data-bind="foreach: lobby">
       <li class="user"><a><img data-bind="attr: {src: profileUrl}" src="http://placehold.it/28x28" style="width: 28px; height: 28px;">
-        <div class="icons"><img src="img/blank.gif" alt="Mexico" class="flag flag-mx">
+        <div class="icons"><img data-bind="attr: {alt: country, 'class': flagCountry}" src="img/blank.gif">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
             <circle cx="6" cy="6" r="4" fill="green"></circle>
           </svg>
         </div><span data-bind="text:name">NAME</span></a>
       </li>
-      <!-- /ko -->
     </ul>
   </div>
 </div>

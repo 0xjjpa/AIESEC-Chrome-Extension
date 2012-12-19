@@ -133,7 +133,9 @@ var aiesec = (function(aiesec, undefined) {
 	      "VIETNAM":"vn"
 	   }
 
-		var USERS_URL = 'https://aiesec.firebaseio.com/users';
+		var AIESEC_URL = 'https://aiesec.firebaseio.com/';
+		var USERS_LOCATION_URL =  'users_list';
+		var USERS_DATA_URL =  'users_data';
 
 		/**
 		* Wrapper for a specific user inside the chat lobby.
@@ -141,10 +143,19 @@ var aiesec = (function(aiesec, undefined) {
 		* @class AiesecUser
 		* @chainable
 		**/
-		var AiesecUser = function(name, country, profileUrl) {
-			this.name = name;
-			this.country = country;
-			this.profileUrl = profileUrl;
+		var AiesecUser = function(id, name, country, profileUrl) {
+			var self = {};
+
+			self.id = id; 
+			self.name = name;
+			self.country = country;
+			self.profileUrl = profileUrl;
+
+			self.flagCountry = (function() {
+				return "flag flag-" + countryCodes[self.country];
+			})();
+
+			return self;
 		}
 
 		/**
@@ -195,14 +206,19 @@ var aiesec = (function(aiesec, undefined) {
 					userprog: "GIP,TMP"
 					xp_stage: "ELD"
 					*/
+					var id = profile.friendid;
 					var name = profile.firstname + " " + profile.lastname;
-					var country = $.trim(profile.country);
+					var country = profile.country;
 					var profileUrl = "http://www.myaiesec.net/displayAvatar.do?friendid="+profile.friendid;
 
-					var user = new AiesecUser(name, country, profileUrl);
+					var user = new AiesecUser(id, name, country, profileUrl);
 					self.myProfile(user);
+					
 					//@todo Use local storage for caching with proper session removal. 
 					//localStorage.setItem('myProfile', ko.toJSON(user));
+
+					// We loaded ourselves successfully, time to connect with server;
+					self.loadLobby();
 				} 
 
 			} else { // We are not logged in, so we won't allow access to the MyAIESEC app.
@@ -217,20 +233,66 @@ var aiesec = (function(aiesec, undefined) {
 			var myProfile = localStorage.getItem('myProfile');
 			if(myProfile) {
 				var rawUser = JSON.parse(myProfile);
-				self.myProfile(new AiesecUser(rawUser.name, rawUser.country, rawUser.profileUrl));
+				self.myProfile(new AiesecUser(rawUser.id, rawUser.name, rawUser.country, rawUser.profileUrl));
 			} else {
 				api.getProfile(self.myProfile);
 			}
 
 		}
 
+		self.addMyData = function(seatInChat, myself, online, aiesecRef) {
+			var userDataRef = aiesecRef.child(USERS_DATA_URL).child(seatInChat);
+			if(!online) { //If just joined the chat, add ourselves to the chat.
+				userDataRef.set(myself);
+			}
+		}
 
-		self.loadUsers =  function() {
-			self.loadMyself();
+		self.loadLobby =  function() {
+			var aiesecRef = new Firebase(AIESEC_URL);
+			var usersListRef = aiesecRef.child(USERS_LOCATION_URL);
+
+			var myself = self.myProfile();
+			var online = false;
+			var seatInChat = 0; 
+
+			// Let's perform a transaction to load our users.
+			usersListRef.transaction(function(userList) {
+				if (userList === null) { //Empty chat
+					userList = [];
+				}
+
+				//We see which users are online so we don't log in again.
+				for (var i = 0; i < userList.length; i++) {
+					if(userList[i] === myself.id) {
+						online = true;
+						seatInChat = i;
+						return;
+					}
+				}
+
+				// If we are not already online, we add ourselves.
+				userList[i] = myself.id;
+				seatInChat = i;
+				return userList;
+
+			}, function (success) {
+				// Transaction completed.
+				if(success || online) {
+					self.addMyData(seatInChat, myself, online, aiesecRef);
+
+					aiesecRef.child(USERS_LOCATION_URL).on('value', function(snapshot) {
+						console.log(snapshot);
+					})
+
+					//self.lobby(usersListRef);
+				} else {
+					console.log("Error while enrolling to chat.");
+				}
+			})
 		}
 
 		self.init =  function() {
-			self.loadUsers();
+			self.loadMyself();
 			return self;
 		}
 

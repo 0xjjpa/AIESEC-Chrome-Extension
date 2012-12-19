@@ -11,7 +11,7 @@ $(document).ready(function() {
 	// We REALLY need to find a better way to organize this...
 	$("#aiesecTemplate").load('js/libs/aiesec/aiesecTemplate.html', function() {
 		$("#bootstrapSearchTNtemplate").load('js/libs/aiesec/tnSearchTool/tnSearchToolTemplate.html', function() {
-			$("#bootstrapChattemplate").load('js/libs/aiesec/chat/chatTemplate.html', function() {
+			$("#bootstrapChattemplate").load('js/libs/aiesec/chat/chatTemplate.html?v=0.12', function() {
 				ko.applyBindings(AIESECViewModel);
 			})
 		});
