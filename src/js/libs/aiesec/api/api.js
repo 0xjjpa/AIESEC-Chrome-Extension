@@ -101,6 +101,16 @@ var aiesec = (function(aiesec, undefined) {
 			self.fakeRequest(areas, container);
 		}
 
+		self.loadLobby = function(myself, container) {
+			var params = {
+				url: "content",
+				data: JSON.stringify(myself),
+				type: "GET"
+			}
+			var request = {command: "loadLobby", params: params};
+			self.request(request, container)
+		}
+
 		self.getProfile = function(container) {
 			
 			var params = {

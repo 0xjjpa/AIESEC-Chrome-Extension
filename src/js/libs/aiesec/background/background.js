@@ -33,7 +33,6 @@ var aiesec = (function(aiesec, undefined) {
 			//We send the proper information to the content script to render our app.
 			 chrome.tabs.sendMessage(tab.id, {load: true}, function(response) {
 			 	if(response) {
-			 		console.log("Completed response from Content Script");
 			 		//After successfully getting the response, we show the Page Action Icon.
     				chrome.pageAction.show(tab.id);		
 			 	}
@@ -75,9 +74,10 @@ var aiesec = (function(aiesec, undefined) {
 		* @event loadPopupContent
 		* @param {Object} event
 		**/
-		var loadPopupContent = function(event) {
+		var receiveFirebase = function(event) {
 			console.log(event);
 			console.log("Background Received Signal to Set up Popup");
+			// We send back to API now.
 		};
 
 		/**
@@ -86,9 +86,7 @@ var aiesec = (function(aiesec, undefined) {
 		**/
 		// @todo Remove this method and implement a proper auth scheme.
 		pg.closeExtension = function() {
-			console.log("Closing extension");
 			var tabId = a.tabId;
-			console.log(tabId);
 			chrome.pageAction.setPopup({tabId: tabId, popup: "forbidden.html"});
 		}
 
@@ -97,13 +95,19 @@ var aiesec = (function(aiesec, undefined) {
 		* @event loadBoostrap
 		* @namespace backgroundPageController
 		**/
-		pg.loadBootstrap = function() {
-			var iframe = document.getElementById("aiesec-frame");
+		pg.loadFirebase = function() {
+			/*
+			console.log("Loading firebase");
+			var aiesecRef = new Firebase('https://aiesec.firebaseio.com/');
+			console.log(aiesecRef);
+			/*
+			var iframe = document.getElementById("aiesec-firebase-frame");
 			var data = {
-				command: "render"
+				command: "load"
 			};
 
 			iframe.contentWindow.postMessage(data, "*");
+			*/
 		};
 
 		/**
@@ -113,7 +117,7 @@ var aiesec = (function(aiesec, undefined) {
 		* @return {Object} Instance of Background Page Controller Class
 		**/
 		pg.init = function() {
-			window.addEventListener('message', loadPopupContent);
+			window.addEventListener('message', receiveFirebase);
 			return pg;
 		};
 

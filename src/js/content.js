@@ -1,3 +1,7 @@
+/**
+* @author jjperezaguinaga
+**/
+
 jQuery.noConflict();
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {	
@@ -10,8 +14,9 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		//We assemble the request
 		if (request.command) {
 			var params = request.params;
+			var callAjax = false;
 
-			if(params) {
+			if(params && params.url !== "content") {
 				var parserRequest = {
 					url: params.url,
 					type: params.type,
@@ -24,6 +29,13 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 		// We see what kind of request we are going to use
 		switch(request.command) {
+			case "loadLobby":
+				// This is an exclusive firebase request.
+				var firebase = new aiesec.firebase();
+				var myself = params.data;
+				firebase.loadLobby(myself);
+				break;
+
 			case "getNationalList":
 				var parser = new aiesec.parser();
 
@@ -36,6 +48,8 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 					console.log("ERROR");
 					var jxhr = data;
 				};
+
+			callAjax = true;
 			break;
 
 			case "getProfile":
@@ -100,12 +114,13 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 					console.log(data);
 					var jxhr = data;
 				};
-				
+
+			callAjax = true;
 			break;
 		}
 
 		// We fire the request
-		if(parserRequest.success && parserRequest.error) jQuery.ajax(parserRequest);
+		if(parserRequest.success && parserRequest.error && callAjax) jQuery.ajax(parserRequest);
 		return true;
 	}
 });
