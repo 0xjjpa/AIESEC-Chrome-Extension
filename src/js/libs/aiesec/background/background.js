@@ -34,10 +34,15 @@ var aiesec = (function(aiesec, undefined) {
 			a.tabId = tabId;
 			if(!a.profileObject) {
 				// We haven't loaded a profile
-				a.profileObject =  new a.profile();				
+				a.profileObject =  new a.profile();		
 			} else {
-				// We loaded a profile, so we show the application
-				chrome.pageAction.show(tabId);
+				// We may have an object, but since session expired it's a bad profile. We check it's a good one.
+				if(a.profileObject.myProfile()) {
+					// We loaded a profile, so we show the application
+					chrome.pageAction.show(tabId);
+				} else {
+					a.profileObject =  new a.profile();
+				}
 			}
 		}
 	};

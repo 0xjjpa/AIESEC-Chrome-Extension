@@ -49,7 +49,7 @@ var aiesec = (function(aiesec, undefined) {
 		self.components = ko.observableArray(
 			[
 				new aiesec.component('Home', 'aiesec_home', 'aiesecTemplate'),
-				new aiesec.component('TN Search Tool', 'aiesec_tn_search_tool', 'bootstrapSearchTNtemplate', 'bootstrapSearchTn', 'tnSearchTool')
+				new aiesec.component('TN Search Tool', 'aiesec_tn_search_tool', 'bootstrapSearchTNtemplate', 'bootstrapSearchTn', 'aiesec-search-tn')
 			]
 		);
 		return self;

@@ -45,6 +45,7 @@ This research has been done for the last 4 months, in order to evaluate the curr
 
 * [contentscope.do](#-exchangecontentscopedo)
 * [browseintern.do](#-exchangebrowseinterndo)
+* [toptendemandsupply.do](#-exchangetoptendemandsupplydo)
 
 This queries can be performind inside the system through the following commands:
 
@@ -148,6 +149,54 @@ Current Requests: [1,2,3,4,...,48,49,50]
 #### countrycode
 [On research] It seems this countrycode is different than the contentscope.do uses, you can't browse by country only, buy need a subid too. Instead, the key regions is being used. 
 
+## <a name="#toptendemandsupply"></a> /exchange/toptendemandsupply.do
+
+> Top Demand Ranking for TN's
+
+**GET Params**
+None
+
+**POST Params**
+operation:"toptentn",
+type:"demand",
+bgrId: null,
+committeeId: null,
+xchType: null,
+durFrom: null,
+durTo: null,
+subbgrname: null,
+programType:"gip"
+categorybyselected: null,
+scope:"1"
+cmtId:"13426545"
+exchangetype:"GI"
+categoryby:0
+categoryby1:0
+durationFrom:6
+durationTo:78
+
+### Fields description
+
+#### operation
+Most of the time is the basic commands sent to a specific servlet inside the system. Given for instance *test.do*, the pattern followed here is similar to a command pattern, where the server has a list of pre recorded expected requests and provides an answer to them.
+
+Current Requests: ["toptentn"]
+
+#### type
+@todo
+Current Requests: ["demand"]
+
+#### programType
+The current user's profile program. 
+Current Requests: ["gip"]
+
+#### scope & cmtId
+Based on the search you are trying to get, you get a different value:
+
+* 1 - International & 13426545 (AIESEC International)
+* 2 - Region & 2 (Western Europe and North America)
+* 3 - Country & 23917314 (Afghanistan)
+* 4 - Local & 24286558 (Kabul) & ---new option 'mccommiteecmtId' 23917314 (Afghanistan) 
 
 # Appendix A: Parser Codes
 

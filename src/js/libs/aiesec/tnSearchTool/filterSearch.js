@@ -17,7 +17,7 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};		
 		var api = new aiesec.api();
 
-		self.typeOfInternship = ko.observable(["Global Internship", "Global Community Development"]);
+		self.typeOfInternship = ko.observable([{label:"Global Internship", value: "GI"}, {label:"Global Community Development", value: "GC"}]);
 		self.selectedTypeOfExchange = ko.observable();
 
 		self.startDuration = ko.observable(6);
