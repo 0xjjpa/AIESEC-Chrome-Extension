@@ -136,10 +136,13 @@ var aiesec = (function(aiesec, undefined) {
 
 		self.request = function(request, container) {
 			chrome.tabs.getSelected(null, function(tab) {
-				chrome.tabs.sendMessage(tab.id, request, function(response) {
-					console.log(response);
-					container(response);
-				});					
+				// We may request from a settings page or when the tab is unknown.
+				if(tab) {
+					chrome.tabs.sendMessage(tab.id, request, function(response) {
+						console.log(response);
+						container(response);
+					});			
+				}
 			});
 		}
 

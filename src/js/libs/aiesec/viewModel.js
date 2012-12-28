@@ -49,8 +49,7 @@ var aiesec = (function(aiesec, undefined) {
 		self.components = ko.observableArray(
 			[
 				new aiesec.component('Home', 'aiesec_home', 'aiesecTemplate'),
-				new aiesec.component('TN Search Tool', 'aiesec_tn_search_tool', 'bootstrapSearchTNtemplate', 'bootstrapSearchTn', 'invalid'),
-				new aiesec.component('AIESEC Chat', 'aiesec_chat', 'bootstrapChattemplate', 'bootstrapChat', 'aiesecChat')
+				new aiesec.component('TN Search Tool', 'aiesec_tn_search_tool', 'bootstrapSearchTNtemplate', 'bootstrapSearchTn', 'tnSearchTool')
 			]
 		);
 		return self;
@@ -64,10 +63,17 @@ var aiesec = (function(aiesec, undefined) {
 	a.viewModel = function() {
 		var self = {};
 
+		self.profile = ko.observable({});
 		self.menu = ko.observable({});
 		self.component = ko.observable({});
 
+		self.loadProfile = function() {
+			var backgroundWindow = chrome.extension.getBackgroundPage();
+			self.profile(backgroundWindow.aiesec.profileObject.JSONObject);
+		}
+
 		self.init = function() {
+			self.loadProfile();
 			self.menu(new aiesec.menu());
 			self.component(self.menu().components()[0]);
 			return self;

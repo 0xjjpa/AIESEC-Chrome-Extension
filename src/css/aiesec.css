@@ -25,13 +25,50 @@
 #aiesec-container .hero-unit {
   margin-bottom: 0px;
 }
-#tnSearchTool .span4 {
-  width: 255px;
+#aiesec-container .span4,
+#aiesec-container .span6 {
+  padding: 20px;
 }
-#tnSearchTool .span4 .thumbnail {
-  width: 255px;
-  overflow-y: scroll;
+#aiesec-container .span4 {
+  width: 260px;
 }
-#tnSearchTool .span6 {
-  width: 506px;
+#aiesec-container .span6 {
+  width: 420px;
+}
+#aiesec-profile {
+  float: right;
+}
+#aiesec-profile .icons {
+  float: right;
+  display: inline-block;
+  position: relative;
+  margin-right: 30px;
+}
+#aiesec-profile a:hover {
+  text-decoration: none;
+}
+#aiesec-profile img {
+  display: inline-block;
+}
+#aiesec-profile img.flag {
+  float: right;
+  margin-top: 8px;
+}
+#aiesec-profile span {
+  font-size: .6em;
+  color: #999;
+  display: inline-block;
+  white-space: nowrap;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#aiesec-profile svg {
+  display: inline-block;
+  position: relative;
+  float: right;
+  margin-top: 8px;
+  margin-right: 8px;
+  width: 10px;
+  height: 10px;
 }

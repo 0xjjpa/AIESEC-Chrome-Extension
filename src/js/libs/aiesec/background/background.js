@@ -5,7 +5,9 @@
 **/
 var aiesec = (function(aiesec, undefined) {
 	var a = aiesec || {};
+
 	a.tabId = -1;
+	a.profileObject = undefined;
 
 	/**
 	* Regular Expression that matches the URL to the MyAIESEC Portal
@@ -28,15 +30,15 @@ var aiesec = (function(aiesec, undefined) {
 		var match = regexAIESEC.exec(tab.url); // var regexAIESEC = new RegExp(/http:\/\/www.myaiesec.net\//);
 		// We only display the Page Action if we are inside a MyAIESEC Tab.
 		if(match && changeInfo.status == 'complete') {
-			//We are going to record the tab Id for later uses.
+			//We are at MyAIESEC.net and we are ready to load our application. Let's see if we have the proper rights.
 			a.tabId = tabId;
-			//We send the proper information to the content script to render our app.
-			 chrome.tabs.sendMessage(tab.id, {load: true}, function(response) {
-			 	if(response) {
-			 		//After successfully getting the response, we show the Page Action Icon.
-    				chrome.pageAction.show(tab.id);		
-			 	}
-  			});
+			if(!a.profileObject) {
+				// We haven't loaded a profile
+				a.profileObject =  new a.profile();				
+			} else {
+				// We loaded a profile, so we show the application
+				chrome.pageAction.show(tabId);
+			}
 		}
 	};
 
@@ -81,13 +83,22 @@ var aiesec = (function(aiesec, undefined) {
 		};
 
 		/**
-		* Method to close the extension in case of unauthorized access.
+		* Method to ensure the extension is closed due unauthorized access.
 		* @event closeExtension
 		**/
-		// @todo Remove this method and implement a proper auth scheme.
 		pg.closeExtension = function() {
 			var tabId = a.tabId;
 			chrome.pageAction.setPopup({tabId: tabId, popup: "forbidden.html"});
+			chrome.pageAction.hide(tabId);
+		}
+
+		/**
+		* Method used to load the extension when proper access.
+		* @event loadExtension
+		**/
+		pg.loadExtension = function() {
+			var tabId = a.tabId;
+			chrome.pageAction.show(tabId);
 		}
 
 		/**
@@ -117,7 +128,7 @@ var aiesec = (function(aiesec, undefined) {
 		* @return {Object} Instance of Background Page Controller Class
 		**/
 		pg.init = function() {
-			window.addEventListener('message', receiveFirebase);
+			//window.addEventListener('message', receiveFirebase);
 			return pg;
 		};
 

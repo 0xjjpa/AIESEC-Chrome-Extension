@@ -78,6 +78,7 @@ var aiesec = (function(aiesec, undefined) {
 
 			/*
 			* Here's our main regular expression; it uses 2 grouping classes, one after support and one after value.
+			* See stagehome.do source code and "Find" support_username to see where I'm retrieving the info from.
 			* Example: document.getElementById('support_username').value='me@jjperezaguinaga.com';
 			* Our regex matches 3 groups:
 			* a) The entire match (duh)

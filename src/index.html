@@ -11,10 +11,10 @@
 </head>
 <body>
   <div id="aiesec-container">
-    <div class="navbar" data-bind="with: menu">
+    <div class="navbar">
       <div class="navbar-inner">
-        <div class="container">                    
-          <div class="nav-collapse collapse">
+        <div class="container">   
+          <div class="nav-collapse collapse" data-bind="with: menu">
             <ul class="nav" data-bind="foreach: components">
               <li data-bind="click: $root.loadComponent">              
                 <a href="#" data-bind="text: name">COMPONENT</a>              
@@ -22,6 +22,15 @@
               <li class="divider-vertical"></li>            
             </ul>
           </div>
+          <a class="brand" id="aiesec-profile" data-bind="with:profile">
+            <img data-bind="attr: {src: profileUrl}" src="http://placehold.it/28x28" style="width: 28px; height: 28px;">
+            <div class="icons"><img data-bind="attr: {alt: country, 'class': flagCountry}" src="img/blank.gif">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                <circle cx="6" cy="6" r="4" fill="green"></circle>
+              </svg>
+            </div>
+            <span data-bind="text:name">NAME</span>
+          </a>
         </div>
       </div>
     </div>
@@ -46,9 +55,9 @@
 <!-- MyAIESEC API Parser -->
 
 <!-- AIESEC Chat Libraries -->
-<script src="js/libs/aiesec/chat/chat.js"></script>
-<script src="js/libs/aiesec/chat/bootstrapChat.js"></script>
-<script type="text/html" id="bootstrapChattemplate"></script>
+<!--<script src="js/libs/aiesec/chat/chat.js"></script>-->
+<!--<script src="js/libs/aiesec/chat/bootstrapChat.js"></script>-->
+<!--<script type="text/html" id="bootstrapChattemplate"></script>-->
 <!-- AIESEC CHat Libraries -->
 
 <!-- TN Search Tool Libraries -->
