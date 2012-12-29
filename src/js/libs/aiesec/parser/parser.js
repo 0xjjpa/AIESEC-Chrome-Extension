@@ -17,8 +17,33 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
+		self.parseDemandResults = function(html) {
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			var parsedObject = {};
+			
+			var pageTables = $(dom).find(".tableClass");
+
+			console.log(pageTables);
+
+			var searchResults = $(pageTables[1]);
+			var searchRows = searchResults.find("tr");
+			console.log(searchRows);
+
+			return parsedObject;
+
+		}
+
 		self.parseObjectNationalList = function(html) {
-			var dom = $('<html>').html(html); // Warning, will eval any content
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			dom = $(dom);
 			var parsedObject = {};
 			$.each(dom.find('select option'), function(i, v) {
 				parsedObject[$(v).val()] = $(v).html();
@@ -27,7 +52,13 @@ var aiesec = (function(aiesec, undefined) {
 		}
 
 		self.parseNationalList = function(html) {
-			var dom = $('<html>').html(html); // Warning, will eval any content
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			dom = $(dom);
+			
 			var parsedResult = [];
 			$.each(dom.find('select option'), function(i, v) {
 				parsedResult[i] = { scopeValue: $(v).val(), name: $(v).html() };	
@@ -38,7 +69,12 @@ var aiesec = (function(aiesec, undefined) {
 
 
 		self.getAreasList = function(html) {
-			var dom = $('<html>').html(html); // Warning, will eval any content
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			dom = $(dom);
 			
 			var areasTable = dom.find('table.tableClass')[1];
 			var areasList = $(areasTable).find('tr').filter(function(index) { return index != 0 })

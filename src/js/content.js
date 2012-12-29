@@ -46,6 +46,23 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		callAjax = true;
 		break;
 
+		case "getDemand":
+			var parser = new aiesec.parser();
+
+			parserRequest.success = function(data) {
+				var result = parser.parseDemandResults(data);
+				console.log(result);
+			};
+
+			parserRequest.error = function(data) {
+				console.log("ERROR");
+				var jxhr = data;
+			};
+
+
+		callAjax = true;
+		break;
+
 		case "getProfile":
 			// We needa new parser in order to retrieve the information from the content page
 			var parser = new aiesec.parser();

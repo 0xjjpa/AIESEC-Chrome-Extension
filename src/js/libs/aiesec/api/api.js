@@ -134,6 +134,38 @@ var aiesec = (function(aiesec, undefined) {
 			// self.fakeRequest(user, container);
 		}
 
+		self.searchDemand = function(params, container) {
+			var data = {
+				operation:"toptentn",
+				type:"demand",
+				bgrId: null,
+				committeeId: null,
+				xchType: null,
+				durFrom: null,
+				durTo: null,
+				subbgrname: null,
+				programType:"gip",
+				categorybyselected: null,
+				scope:params.subscope,
+				cmtId:params.scope,
+				exchangetype:params.exchange,
+				categoryby:0,
+				categoryby1:0,
+				durationFrom:params.start,
+				durationTo:params.end
+			};
+
+			var params = {
+				url: "http://www.myaiesec.net/exchange/toptendemandsupply.do",
+				data: data,
+				type: "POST",
+				dataType: "text"
+			}
+
+			var request = {command: "getDemand", params: params};
+			self.request(request, container);
+		}
+
 		self.request = function(request, container) {
 			chrome.tabs.getSelected(null, function(tab) {
 				// We may request from a settings page or when the tab is unknown.

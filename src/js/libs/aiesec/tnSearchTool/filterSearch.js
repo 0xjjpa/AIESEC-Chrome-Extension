@@ -17,6 +17,8 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};		
 		var api = new aiesec.api();
 
+		self.searchResults = ko.observableArray([]);
+
 		self.typeOfInternship = ko.observable([{label:"Global Internship", value: "GI"}, {label:"Global Community Development", value: "GC"}]);
 		self.selectedTypeOfExchange = ko.observable();
 
@@ -44,8 +46,8 @@ var aiesec = (function(aiesec, undefined) {
 		
 		self.searchScopeOptions = ko.observableArray(
 			[{name:"AIESEC International", scopeValue: 13426545},
-			{name: "Region", scopeValue: "regionalList"}, 
-			{name:"Country", scopeValue:"nationalList"}]);
+			{name: "Region", scopeValue: 2}, //Regional Scope value is 2
+			{name:"Country", scopeValue: 3}]); // Country Scope value is 3
 
 		self.selectedScope = ko.observable();
 		self.selectedScopeLevel = ko.observable();
@@ -58,11 +60,11 @@ var aiesec = (function(aiesec, undefined) {
 			switch(scopeValue) {
 				case 13426545: //International id provided by MyAIESEC
 				self.selectedScopeLevel('international');
-				self.selectedSubscope({});
+				self.selectedSubscope(1);
 				self.selectedScopeHasSubscope(false);
 				break; 				
 
-				case "regionalList":	
+				case 2:	
 				self.selectedScopeLevel('regional');			
 				self.searchSubscopeOptions(
 					[{name: "Asia Pacific", scopeValue: 3}, 
@@ -76,7 +78,7 @@ var aiesec = (function(aiesec, undefined) {
 				self.selectedScopeHasSubscope(true);
 				break;
 
-				case "nationalList":
+				case 3:
 				self.selectedScopeLevel('national');
 				var nationalListContainer = localStorage.getItem('nationalListContainer');
 				
@@ -89,7 +91,6 @@ var aiesec = (function(aiesec, undefined) {
 				self.selectedScopeHasSubscope(true);
 				break;
 			}
-
 		}
 
 		var onSubscopeLoad = function(container) {			
@@ -103,31 +104,28 @@ var aiesec = (function(aiesec, undefined) {
 		}
 	
 		self.submitSearch = function() {
-			var scope = self.selectedScope();
-			var subscope = self.selectedSubscope();
-			var exchange = self.selectedTypeOfExchange();
-			var start = self.startDuration();
-			var end = self.endDuration();
-			console.log("-===-")
-			console.log(scope);
-			console.log(subscope);
-			console.log(exchange);
-			console.log(start);
-			console.log(end);
-			console.log("-===-")
+			var params = {
+				scope: self.selectedScope(),
+				subscope: self.selectedSubscope(),
+				exchange: self.selectedTypeOfExchange(),
+				start: self.startDuration(),
+				end: self.endDuration()
+			};
+
+			api.searchDemand(params, self.searchResults);
 		}
 
-self.selectedScope.subscribe(onScopeChange);
-self.searchSubscopeOptions.subscribe(onSubscopeLoad);
+		self.selectedScope.subscribe(onScopeChange);
+		self.searchSubscopeOptions.subscribe(onSubscopeLoad);
 
-self.init = function() {
-	self.selectedTypeOfExchange(self.typeOfInternship()[0]);
-	self.selectedScope(self.searchScopeOptions()[0]);
-	return self;
-}
+		self.init = function() {
+			self.selectedTypeOfExchange(self.typeOfInternship()[0]);
+			self.selectedScope(self.searchScopeOptions()[0]);
+			return self;
+		}
 
-return self.init();
-}
+		return self.init();
+		}
 
-return aiesec;
-})(aiesec)
+	return aiesec;
+})(aiesec);
