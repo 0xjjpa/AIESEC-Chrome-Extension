@@ -15,7 +15,7 @@
   margin-left: 10px;
 }
 #aiesec-container .thumbnail.main {
-  height: 400px;
+  max-height: 400px;
   overflow-y: scroll;
   margin-bottom: 5px;
 }
@@ -72,7 +72,39 @@
   width: 10px;
   height: 10px;
 }
+#aiesec-search-tn #storage {
+  height: 135px;
+}
+#aiesec-search-tn #options {
+  height: 250px;
+}
+#aiesec-search-tn #options .chzn-container .chzn-results {
+  max-height: 120px;
+}
+#aiesec-search-tn .result {
+  cursor: pointer;
+}
+#aiesec-search-tn .result:hover {
+  background-color: #eee;
+}
+#aiesec-search-tn .arrow {
+  position: relative;
+  float: right;
+  right: 3px;
+  top: -25px;
+}
 #aiesec-search-tn .caption-holder {
+  width: 98%;
+  display: block;
+}
+#aiesec-search-tn .caption-holder h5 {
+  display: inline;
+}
+#aiesec-search-tn .caption-holder small {
+  color: #999;
+  font-size: .8em;
+}
+#aiesec-search-tn .caption-half-holder {
   width: 48%;
   display: inline-block;
 }

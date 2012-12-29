@@ -19,6 +19,16 @@ var aiesec = (function(aiesec, undefined) {
 
 		self.searchResults = ko.observableArray([]);
 
+		self.searchResults.subscribe(function(value) {
+			if(value.length > 0) {
+				self.emptyResults(false);
+			}
+		});
+
+		self.isLoading = ko.observable(false);
+		self.emptyResults = ko.observable(true);
+		self.firstSearch = ko.observable(true);
+
 		self.typeOfInternship = ko.observable([{label:"Global Internship", value: "GI"}, {label:"Global Community Development", value: "GC"}]);
 		self.selectedTypeOfExchange = ko.observable();
 
@@ -111,7 +121,7 @@ var aiesec = (function(aiesec, undefined) {
 				start: self.startDuration(),
 				end: self.endDuration()
 			};
-
+			self.isLoading(true);
 			api.searchDemand(params, self.searchResults);
 		}
 

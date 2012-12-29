@@ -51,7 +51,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
 			parserRequest.success = function(data) {
 				var result = parser.parseDemandResults(data);
-				console.log(result);
+				sendResponse(result);
 			};
 
 			parserRequest.error = function(data) {

@@ -23,18 +23,35 @@ var aiesec = (function(aiesec, undefined) {
 			dom.innerHTML = html;
 			$(dom).find('script').remove();
 
-			var parsedObject = {};
+			// Object to return with result
+			var parsedArray = [];
 			
+			// Containers with the results
 			var pageTables = $(dom).find(".tableClass");
 
-			console.log(pageTables);
-
+			// The results are located in the first one
 			var searchResults = $(pageTables[1]);
-			var searchRows = searchResults.find("tr");
-			console.log(searchRows);
+			// We remove the first one, as it's the header
+			var searchRows = searchResults.find("tr").filter(function(i) { return i > 1 }); 
 
-			return parsedObject;
+			$.each(searchRows, function(i, v) {
+				var row = $(v); // The row that contains the result search
+				var cells = $(v).find("td"); // The actual table cells
+				var anchorWithName = $(cells[0]).find("a"); // The anchor with the information of the search id and name
+				var anchorWithCount = $(cells[1]).find("a"); // The anchor with the information of the amount of searchs
 
+				var attr = $(anchorWithName).attr("onclick");
+				var regex = /viewBgrPopupTN\('([^\']+)','([^\']+)'\)/g; // We are going to retrieve the onClick attr and obtain name and ID
+
+				var match = regex.exec(attr);
+				if (match) {
+					var resultId = match[1];
+					var resultName = match[2];
+				}
+				parsedArray[i] = {id: resultId, name: resultName, count: $(anchorWithCount).text()};
+			})
+
+			return parsedArray;
 		}
 
 		self.parseObjectNationalList = function(html) {
@@ -58,7 +75,7 @@ var aiesec = (function(aiesec, undefined) {
 			$(dom).find('script').remove();
 
 			dom = $(dom);
-			
+
 			var parsedResult = [];
 			$.each(dom.find('select option'), function(i, v) {
 				parsedResult[i] = { scopeValue: $(v).val(), name: $(v).html() };	

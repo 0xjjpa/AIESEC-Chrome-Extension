@@ -10,6 +10,13 @@ In order to provide a better experience to the current stakeholders of MyAIESEC.
 
 A previous attempt was done [here](https://chrome.google.com/webstore/detail/aiesec-tn-lookup/ebojdlfifalbfankoldbfmcfkpfkcccc) through a Google Chrome Extension. Sadly, due it's lack of interface, it's hard to actually speed up some of the aforementioned tasks
 
+## List of Features
+
+* Profile per AIESECer
+* Search for TN categories 
+* Sort TN categories by name (Next release)
+* Search TN categories through a text input field (Next release)
+
 ## Chrome Extension
 Currently this repository still holds the content of an improved Google Chrome application using the following technologies:
 

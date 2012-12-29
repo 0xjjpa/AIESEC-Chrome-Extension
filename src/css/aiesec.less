@@ -6,7 +6,7 @@
 	.navbar{margin-bottom: 5px;}
 	.first{margin-left: 25px; padding-left: 5px;}
 	.last{margin-left: 10px;}
-	.thumbnail.main{height: 400px; overflow-y: scroll; margin-bottom: 5px;}
+	.thumbnail.main{max-height: 400px; overflow-y: scroll; margin-bottom: 5px;}
 	.thumbnail{margin-bottom: 4px;}
 	.hero-unit{margin-bottom: 0px;}
 
@@ -68,7 +68,44 @@
 }
 
 #aiesec-search-tn {
+	#storage {
+		height: 135px;
+	}
+
+	#options {
+		height: 250px;
+		.chzn-container .chzn-results {
+			max-height: 120px;
+		}
+	}
+
+	.result {
+		cursor: pointer;
+	}
+
+	.result:hover {
+		background-color: #eee;
+
+	}
+
+	.arrow {
+		position: relative;
+		float: right;
+		right: 3px;
+		top: -25px;
+	}
+
 	.caption-holder {
-		width: 48%; display:inline-block;	
+		h5 {
+			display: inline;
+		}
+		small {
+			color: #999;
+			font-size: .8em;
+		}
+		width: 98%; display:block;	
+	}
+	.caption-half-holder {
+		width: 48%; display:inline-block;		
 	}
 }

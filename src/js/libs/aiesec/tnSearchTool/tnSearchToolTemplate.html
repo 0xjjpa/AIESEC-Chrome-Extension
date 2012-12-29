@@ -1,6 +1,11 @@
 <div class="span4 first" data-bind="with: core">
-  <div class="thumbnail main">            
-    <div class="caption" data-bind="with: searchFilter">      
+  
+  <div id="options" class="thumbnail main" data-bind="with: searchFilter">
+    <div class="caption">
+      <h5> Select options and search for TN's </h5>
+    </div>
+                 
+    <div class="caption">   
       <div class="control-group">                
         <label class="control-label" for="tn-search-scope">Select Range</label>
         <div class="controls">                  
@@ -33,30 +38,95 @@
           <select id="tn-search-endDuration" data-bind="options: endDurationOptions, value: endDuration, chosen: true"></select>          
         </div>
       </div>
-      <!--<p data-bind="text: ko.toJSON($data)"></p>-->
       <div class="controls">
         <button type="submit" data-bind="click: submitSearch" class="btn btn-primary">Search</button>        
       </div>
     </div>
   </div>
+
+  <div id="storage" class="thumbnail main">
+    <div class="caption">
+      <h5> Load previous search </h5>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+    <div class="caption">
+      <h6>Mon 12th Sept 2012</h6>
+      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+    </div>
+  </div>
+
 </div>
 
 
-<div class="span6 last">
-  <div class="thumbnail main">                        
-    <div class="thumbnail">
-      <div class="caption">
-        <div class="caption-holder">
-          <h5>TN ID <small>TN-In-IN-ID-2012-1088</small></h5>              
-          <h5>Organization <small>Prestige</small></h5>              
-          <h5>Committee <small>AIESEC Indore</small></h5>
+<div class="span6 last" data-bind="with: core">
+  <div class="thumbnail main" data-bind="with: searchFilter">                        
+      <!-- ko ifnot:emptyResults -->
+        <!-- ko foreach:searchResults-->
+        <div class="thumbnail result">
+          <div class="caption">
+            <div class="caption-holder">
+              <h5 data-bind="text:name">NAME</h5>
+              <small>Found <span data-bind="text:count">COUNT</span></small>
+            </div>
+          </div>
+          <i class="arrow icon-chevron-right"></i>
         </div>
-        <div class="caption-holder">
-          <h5>Country <small>India</small></h5>
-          <h5>Date Raised <small>27.12.2012</small></h5>
-          <h5><a href="#">View TN details</a></h5>
+        <!-- /ko -->
+      <!-- /ko -->
+
+      <!-- ko if:emptyResults -->
+        <!-- ko if:isLoading -->
+        <div class="thumbnail">
+          <div class="caption">
+            <div class="caption-holder">
+              <h5>Loading search...</h5>
+            </div>
+          </div>
         </div>
-      </div>              
-    </div>
+        <!-- /ko -->
+
+        <!-- ko ifnot:isLoading -->
+
+          <!-- ko if:firstSearch -->
+          <div class="thumbnail">
+            <div class="caption">
+              <div class="caption-holder">
+                <h5>Please select your options and press search.</h5>
+              </div>
+            </div>
+          </div>
+          <!-- /ko -->
+
+          <!-- ko ifnot:firstSearch -->
+          <div class="thumbnail">
+            <div class="caption">
+              <div class="caption-holder">
+                <h5>We didn't find any TN's that match your options.</h5>
+              </div>
+            </div>
+          </div>
+          <!-- /ko -->
+
+        <!-- /ko -->
+      <!-- /ko -->
   </div>
 </div>
