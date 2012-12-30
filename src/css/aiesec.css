@@ -72,7 +72,11 @@
   width: 10px;
   height: 10px;
 }
+#aiesec-search-tn i {
+  cursor: pointer;
+}
 #aiesec-search-tn #storage {
+  margin-top: 30px;
   height: 135px;
 }
 #aiesec-search-tn #storage .icons {
@@ -89,6 +93,14 @@
 }
 #aiesec-search-tn #options .chzn-container .chzn-results {
   max-height: 120px;
+}
+#aiesec-search-tn .caption-title {
+  position: absolute;
+  top: 53px;
+}
+#aiesec-search-tn .caption-title-bottm {
+  position: absolute;
+  top: 343px;
 }
 #aiesec-search-tn .result {
   cursor: pointer;

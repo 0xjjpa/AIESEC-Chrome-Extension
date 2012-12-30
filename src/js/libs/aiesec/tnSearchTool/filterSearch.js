@@ -14,6 +14,7 @@ var aiesec = (function(aiesec, undefined) {
 	* @chainable
 	*/
 	aiesec.filterSearch = function() {
+
 		var self = {};		
 		var api = new aiesec.api();
 		var SEARCH_RESULTS_KEY = "searchResults";
@@ -42,8 +43,25 @@ var aiesec = (function(aiesec, undefined) {
 			return self;
 		}
 
+		self.clearSavedSearches = function() {
+			chrome.storage.local.clear();
+			self.loadSearchCollections();
+		}
+
+		self.deleteSavedSearchResult = function(savedResult) {
+
+			chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
+				if(!ResultsHashMap[SEARCH_RESULTS_KEY]) {
+        			// First time, we need to ensure there's a map to hold our results.
+        			ResultsHashMap = {};
+        			ResultsHashMap[SEARCH_RESULTS_KEY]= {};
+        		}
+			});
+		}
+
 		self.savedSearchResults = ko.observableArray([]);
 		self.searchResults = ko.observableArray([]);
+		self.currentSearch = ko.observable("");
 
 		self.loadSearchCollections = function() {
 			chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
@@ -85,22 +103,24 @@ var aiesec = (function(aiesec, undefined) {
 				var unixTimestamp = Math.round(timestamp.getTime() / 1000);
 
 				var searchObject = new SearchResultCollection(unixTimestamp, timestamp, value, categories, results);
+				self.currentSearch("> "+searchObject.dateToString);
 
 				chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
-					console.log(ResultsHashMap);
+					
         			if(!ResultsHashMap[SEARCH_RESULTS_KEY]) {
         				// First time, we need to ensure there's a map to hold our results.
         				ResultsHashMap = {};
         				ResultsHashMap[SEARCH_RESULTS_KEY]= {};
         			}
-        			console.log(ResultsHashMap);
+        			
         			var searchResultsObject = ResultsHashMap[SEARCH_RESULTS_KEY];
-        			console.log(searchResultsObject);
+        			
         			// We add our new id to our search Results hashmap and a light weight version of the Search Object
         			searchResultsObject[unixTimestamp] = {
         				categories: searchObject.categoriesToString, 
         				results: searchObject.resultsToString,
-        				timestamp: searchObject.dateToString
+        				timestamp: searchObject.dateToString,
+        				id: unixTimestamp
         			};
         			
 

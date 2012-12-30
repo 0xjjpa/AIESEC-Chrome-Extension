@@ -1,10 +1,7 @@
 <div class="span4 first" data-bind="with: core">
   
   <div id="options" class="thumbnail main" data-bind="with: searchFilter">
-    <div class="caption">
-      <h5> Select options and search for TN's </h5>
-    </div>
-                 
+    <h5 class="caption-title"> Select options and search for TN's </h5>
     <div class="caption">   
       <div class="control-group">                
         <label class="control-label" for="tn-search-scope">Select Range</label>
@@ -45,9 +42,7 @@
   </div>
 
   <div id="storage" class="thumbnail main" data-bind="with: searchFilter">
-    <div class="caption">
-      <h5> Load previous search </h5>
-    </div>
+    <h5 class="caption-title-bottom"> Load a search<small> Clear all <i data-bind="click:clearSavedSearches" class="icon-trash"></i></small></h5>
     <!-- ko foreach: savedSearchResults -->
     <div class="caption">
       <h6 data-bind="text: timestamp">TIMESTAMP</h6>
@@ -65,6 +60,9 @@
 
 <div class="span6 last" data-bind="with: core">
   <div class="thumbnail main" data-bind="with: searchFilter">                        
+    <h5 class="caption-title"> Results 
+    <small data-bind="text: currentSearch"></small>
+  </h5>
       <!-- ko ifnot:emptyResults -->
         <!-- ko foreach:searchResults-->
         <div class="thumbnail result">
