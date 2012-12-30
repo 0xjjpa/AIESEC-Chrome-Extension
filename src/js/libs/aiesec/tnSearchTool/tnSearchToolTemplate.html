@@ -44,34 +44,20 @@
     </div>
   </div>
 
-  <div id="storage" class="thumbnail main">
+  <div id="storage" class="thumbnail main" data-bind="with: searchFilter">
     <div class="caption">
       <h5> Load previous search </h5>
     </div>
+    <!-- ko foreach: savedSearchResults -->
     <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
+      <h6 data-bind="text: timestamp">TIMESTAMP</h6>
+      <span data-bind="text: categories" class="label label-info"> CATEGORIES </span>&nbsp;<span data-bind="text: results" class="label label-inverse"> RESULTS</span>
+      <div class="icons">
+        <i class="icon-share-alt"></i>
+        <i class="icon-remove"></i>
+      </div>
     </div>
-    <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
-    </div>
-    <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
-    </div>
-    <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
-    </div>
-    <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
-    </div>
-    <div class="caption">
-      <h6>Mon 12th Sept 2012</h6>
-      <span class="label label-info"> 21 Categories </span>&nbsp;<span class="label label-inverse"> 398 Results</span>
-    </div>
+    <!-- /ko -->
   </div>
 
 </div>

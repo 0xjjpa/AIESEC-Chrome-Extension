@@ -16,6 +16,8 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 * Search for TN categories 
 * Sort TN categories by name (Next release)
 * Search TN categories through a text input field (Next release)
+* Ability to save previous searchs
+* Synchronization of saved searches across machines
 
 ## Chrome Extension
 Currently this repository still holds the content of an improved Google Chrome application using the following technologies:

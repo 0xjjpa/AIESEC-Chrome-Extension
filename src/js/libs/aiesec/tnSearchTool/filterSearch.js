@@ -16,13 +16,116 @@ var aiesec = (function(aiesec, undefined) {
 	aiesec.filterSearch = function() {
 		var self = {};		
 		var api = new aiesec.api();
+		var SEARCH_RESULTS_KEY = "searchResults";
 
+		var SearchResultCollection = function(id, timestamp, searchResults, categories, results) {
+			var self = {};
+
+			self.id = id; 
+			self.timestamp = timestamp;
+			self.searchResults = searchResults;
+			self.categories = categories;
+			self.results = results;
+
+			self.dateToString = (function() {
+				return self.timestamp.toLocaleDateString();
+			})();
+
+			self.categoriesToString = (function() {
+				return self.categories + " Categories";
+			})();
+
+			self.resultsToString = (function() {
+				return self.results + " Results";
+			})();
+
+			return self;
+		}
+
+		self.savedSearchResults = ko.observableArray([]);
 		self.searchResults = ko.observableArray([]);
+
+		self.loadSearchCollections = function() {
+			chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
+				
+				if(!ResultsHashMap) {
+					console.log("Empty saved results");
+				} else {
+					var searchResultsObject = ResultsHashMap[SEARCH_RESULTS_KEY];
+					var resultsArray = [];
+					for (var key in searchResultsObject) {
+						if(searchResultsObject.hasOwnProperty(key)) {
+							var resultLightObject = searchResultsObject[key];
+							console.log(resultLightObject);
+							//We ensure only proper formatted objects get into the array.
+							if(resultLightObject.timestamp) {
+								resultsArray.unshift(resultLightObject);
+							}
+						}
+					}
+					self.savedSearchResults(resultsArray);
+				}
+        	});		
+		}
 
 		self.searchResults.subscribe(function(value) {
 			if(value.length > 0) {
 				self.emptyResults(false);
-			}
+
+				//We are going to save that specific search
+				var categories = 0;
+				var results = 0;
+
+				$.map(value, function(searchResult) {
+					categories++;
+					results += parseInt(searchResult.count, 10);
+				});
+
+				var timestamp = new Date();				
+				var unixTimestamp = Math.round(timestamp.getTime() / 1000);
+
+				var searchObject = new SearchResultCollection(unixTimestamp, timestamp, value, categories, results);
+
+				chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
+					console.log(ResultsHashMap);
+        			if(!ResultsHashMap[SEARCH_RESULTS_KEY]) {
+        				// First time, we need to ensure there's a map to hold our results.
+        				ResultsHashMap = {};
+        				ResultsHashMap[SEARCH_RESULTS_KEY]= {};
+        			}
+        			console.log(ResultsHashMap);
+        			var searchResultsObject = ResultsHashMap[SEARCH_RESULTS_KEY];
+        			console.log(searchResultsObject);
+        			// We add our new id to our search Results hashmap and a light weight version of the Search Object
+        			searchResultsObject[unixTimestamp] = {
+        				categories: searchObject.categoriesToString, 
+        				results: searchObject.resultsToString,
+        				timestamp: searchObject.dateToString
+        			};
+        			
+
+        			var ResultHashMapObject = {};
+        			ResultHashMapObject[SEARCH_RESULTS_KEY] = searchResultsObject;
+        			console.log(ResultHashMapObject)
+        			// We set the map into the chrome storage
+        			chrome.storage.local.set( ResultHashMapObject, function() { 
+
+        				//We updated the hash map successfully, time to add our entire object to the storage.
+        				self.loadSearchCollections();
+        				console.log("Updated searchResults map successfully");
+
+        				var ResultObject = {}
+        				ResultObject[searchObject.id] = searchObject;
+
+        				console.log(ResultObject);
+        				chrome.storage.local.set( ResultObject, function() {
+
+        					// We added our entire object to a local storage sucessfully
+        					console.log("Updated searchObject successfully");
+        				});
+					});
+    			});				
+			};
 		});
 
 		self.isLoading = ko.observable(false);
@@ -131,6 +234,7 @@ var aiesec = (function(aiesec, undefined) {
 		self.init = function() {
 			self.selectedTypeOfExchange(self.typeOfInternship()[0]);
 			self.selectedScope(self.searchScopeOptions()[0]);
+			self.loadSearchCollections();
 			return self;
 		}
 

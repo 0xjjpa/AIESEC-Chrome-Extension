@@ -75,6 +75,15 @@
 #aiesec-search-tn #storage {
   height: 135px;
 }
+#aiesec-search-tn #storage .icons {
+  position: relative;
+  float: right;
+  top: -1px;
+  right: 10px;
+}
+#aiesec-search-tn #storage .icons i {
+  cursor: pointer;
+}
 #aiesec-search-tn #options {
   height: 250px;
 }

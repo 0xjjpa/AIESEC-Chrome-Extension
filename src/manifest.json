@@ -21,6 +21,7 @@
       },  
   "permissions" : [
       "tabs",
+      "storage",
       "unlimitedStorage",
       "background",
       "http://www.firebase.com/*",
