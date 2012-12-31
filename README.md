@@ -21,6 +21,7 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 ## Things to add
 
 * Ability to see which params were chosen in a saved search
+* Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage.
 
 ## Chrome Extension
 Currently this repository still holds the content of an improved Google Chrome application using the following technologies:

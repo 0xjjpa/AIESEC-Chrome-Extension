@@ -48,6 +48,17 @@ var aiesec = (function(aiesec, undefined) {
 			self.loadSearchCollections();
 		}
 
+		self.loadSavedSearchResult = function(savedResult) {
+			chrome.storage.local.get( savedResult.id+"", function(savedResultHashObject) {
+				var savedResultObject = savedResultHashObject[savedResult.id];
+				self.isLoading(true);
+				self.searchResults([]);
+				self.wasLoadedFromSearch(true);
+				self.currentSearch("> "+savedResultObject.dateToString);
+				self.searchResults(savedResultObject.searchResults);
+			});
+		}
+
 		self.deleteSavedSearchResult = function(savedResult) {
 
 			chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
@@ -56,10 +67,30 @@ var aiesec = (function(aiesec, undefined) {
         			ResultsHashMap = {};
         			ResultsHashMap[SEARCH_RESULTS_KEY]= {};
         		}
+        		// We try to delete the entry given through the id (unixtimestamp)
+        		var searchResultsObject = ResultsHashMap[SEARCH_RESULTS_KEY];
+        		delete searchResultsObject[savedResult.id];
+
+        		var ResultHashMapObject = {};
+        		ResultHashMapObject[SEARCH_RESULTS_KEY] = searchResultsObject;
+
+        		chrome.storage.local.set( ResultHashMapObject, function() { 
+
+        				//We updated the hash map successfully, time to add our entire object to the storage.
+        				self.loadSearchCollections();
+
+        				//We remove the actual object from the storage
+        				chrome.storage.local.remove(savedResult.id, function() {
+        					console.log("Removed successfully");
+        				});
+				});
+
 			});
 		}
 
 		self.savedSearchResults = ko.observableArray([]);
+		self.wasLoadedFromSearch = ko.observable(false);
+
 		self.searchResults = ko.observableArray([]);
 		self.currentSearch = ko.observable("");
 
@@ -74,7 +105,6 @@ var aiesec = (function(aiesec, undefined) {
 					for (var key in searchResultsObject) {
 						if(searchResultsObject.hasOwnProperty(key)) {
 							var resultLightObject = searchResultsObject[key];
-							console.log(resultLightObject);
 							//We ensure only proper formatted objects get into the array.
 							if(resultLightObject.timestamp) {
 								resultsArray.unshift(resultLightObject);
@@ -87,7 +117,10 @@ var aiesec = (function(aiesec, undefined) {
 		}
 
 		self.searchResults.subscribe(function(value) {
-			if(value.length > 0) {
+			if(self.wasLoadedFromSearch()) {
+				self.wasLoadedFromSearch(false);				
+				self.emptyResults(false);
+			} else if(value.length > 0) {
 				self.emptyResults(false);
 
 				//We are going to save that specific search
@@ -126,7 +159,7 @@ var aiesec = (function(aiesec, undefined) {
 
         			var ResultHashMapObject = {};
         			ResultHashMapObject[SEARCH_RESULTS_KEY] = searchResultsObject;
-        			console.log(ResultHashMapObject)
+        			
         			// We set the map into the chrome storage
         			chrome.storage.local.set( ResultHashMapObject, function() { 
 
@@ -145,7 +178,9 @@ var aiesec = (function(aiesec, undefined) {
         				});
 					});
     			});				
-			};
+			} else {
+				self.emptyResults(true);
+			}
 		});
 
 		self.isLoading = ko.observable(false);
@@ -237,6 +272,8 @@ var aiesec = (function(aiesec, undefined) {
 		}
 	
 		self.submitSearch = function() {
+			self.isLoading(true);
+			self.searchResults([]); // Empty results to show loading;
 			var params = {
 				scope: self.selectedScope(),
 				subscope: self.selectedSubscope(),
@@ -244,7 +281,6 @@ var aiesec = (function(aiesec, undefined) {
 				start: self.startDuration(),
 				end: self.endDuration()
 			};
-			self.isLoading(true);
 			api.searchDemand(params, self.searchResults);
 		}
 

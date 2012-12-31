@@ -94,11 +94,14 @@
 #aiesec-search-tn #options .chzn-container .chzn-results {
   max-height: 120px;
 }
+#aiesec-search-tn #results {
+  max-height: 425px;
+}
 #aiesec-search-tn .caption-title {
   position: absolute;
   top: 53px;
 }
-#aiesec-search-tn .caption-title-bottm {
+#aiesec-search-tn .caption-title-bottom {
   position: absolute;
   top: 343px;
 }

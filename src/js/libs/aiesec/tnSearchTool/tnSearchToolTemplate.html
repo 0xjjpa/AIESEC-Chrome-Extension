@@ -48,8 +48,8 @@
       <h6 data-bind="text: timestamp">TIMESTAMP</h6>
       <span data-bind="text: categories" class="label label-info"> CATEGORIES </span>&nbsp;<span data-bind="text: results" class="label label-inverse"> RESULTS</span>
       <div class="icons">
-        <i class="icon-share-alt"></i>
-        <i class="icon-remove"></i>
+        <i data-bind="click: $parents[0].loadSavedSearchResult" class="icon-share-alt"></i>
+        <i data-bind="click: $parents[0].deleteSavedSearchResult" class="icon-remove"></i>
       </div>
     </div>
     <!-- /ko -->
@@ -59,7 +59,7 @@
 
 
 <div class="span6 last" data-bind="with: core">
-  <div class="thumbnail main" data-bind="with: searchFilter">                        
+  <div id="results" class="thumbnail main" data-bind="with: searchFilter">                        
     <h5 class="caption-title"> Results 
     <small data-bind="text: currentSearch"></small>
   </h5>
