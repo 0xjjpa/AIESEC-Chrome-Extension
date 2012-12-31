@@ -17,6 +17,15 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
+		self.parseBackgroundResults = function(html) {
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			console.log($(dom).text());
+		}
+
 		self.parseDemandResults = function(html) {
 			// We ensure javascript is not executed
 			var dom = document.createElement('div');

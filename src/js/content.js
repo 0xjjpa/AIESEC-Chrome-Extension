@@ -46,6 +46,23 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		callAjax = true;
 		break;
 
+		case "getBackground":
+			var parser = new aiesec.parser();
+			parserRequest.success = function(data) {
+				var result = parser.parseBackgroundResults(data);
+				console.log(result);
+				//sendResponse(result);
+			};
+
+			parserRequest.error = function(data) {
+				console.log("ERROR");
+				var jxhr = data;
+			};
+
+
+		callAjax = true;
+		break;
+
 		case "getDemand":
 			var parser = new aiesec.parser();
 

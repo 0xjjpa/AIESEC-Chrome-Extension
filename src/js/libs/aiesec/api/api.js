@@ -134,6 +134,38 @@ var aiesec = (function(aiesec, undefined) {
 			// self.fakeRequest(user, container);
 		}
 
+		self.searchBackground = function(params, container) {
+			var data = {
+				operation:"backgroundpopupTN",
+				type:"",
+				bgrId: params.backgroundId,
+				committeeId: params.subscope,
+				xchType: 0,
+				durFrom: params.start,
+				durTo: params.end,
+				subbgrname: params.backgroundName,
+				programType:"gip",
+				categorybyselected: 0,
+				scope:params.scope,
+				cmtId:params.subscope,
+				exchangetype:params.exchange,
+				categoryby:0,
+				categoryby1:0,
+				durationFrom:params.start,
+				durationTo:params.end
+			};
+
+			var params = {
+				url: "http://www.myaiesec.net/exchange/toptendemandsupply.do",
+				data: data,
+				type: "POST",
+				dataType: "text"
+			}
+
+			var request = {command: "getBackground", params: params};
+			self.request(request, container);
+		}
+
 		self.searchDemand = function(params, container) {
 			
 			/*

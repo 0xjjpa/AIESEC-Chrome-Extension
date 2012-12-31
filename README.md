@@ -23,6 +23,10 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 * Ability to see which params were chosen in a saved search
 * Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage.
 
+## Notes
+
+Line 1094 in an Error response is the line where you can see whether a response is successful or not through the Chrome Dev Tool "Network" inspector.
+
 ## Chrome Extension
 Currently this repository still holds the content of an improved Google Chrome application using the following technologies:
 

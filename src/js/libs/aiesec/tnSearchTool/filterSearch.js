@@ -58,6 +58,7 @@ var aiesec = (function(aiesec, undefined) {
 				self.searchResults([]);
 				self.wasLoadedFromSearch(true);
 				self.currentSearch("> "+savedResultObject.dateToString);
+				self.searchParams(savedResult.params);
 				self.searchResults(savedResultObject.searchResults);
 			});
 		}
@@ -96,6 +97,28 @@ var aiesec = (function(aiesec, undefined) {
 
 		self.searchResults = ko.observableArray([]);
 		self.currentSearch = ko.observable("");
+
+		self.backgroundResults = ko.observableArray([]);
+
+		self.backgroundResults.subscribe(function(value){
+			console.log(value);
+		})
+
+		self.loadBackground = function(searchResult) {
+			var searchParams = self.searchParams();
+
+			var params = {
+				start: searchParams.start,
+				end: searchParams.end,
+				exchange: searchParams.exchange,
+				scope: searchParams.scope,
+				subscope: searchParams.subscope,
+				backgroundId: searchResult.id,
+				backgroundName: searchResult.name
+			};
+			
+			api.searchBackground(params, self.backgroundResults);
+		}
 
 		self.loadSearchCollections = function() {
 			chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
@@ -143,6 +166,7 @@ var aiesec = (function(aiesec, undefined) {
 				var unixTimestamp = Math.round(timestamp.getTime() / 1000);
 
 				var searchObject = new SearchResultCollection(unixTimestamp, timestamp, value, categories, results);
+
 				self.currentSearch("> "+searchObject.dateToString);
 
 				chrome.storage.local.get( SEARCH_RESULTS_KEY, function(ResultsHashMap) {
@@ -157,6 +181,7 @@ var aiesec = (function(aiesec, undefined) {
         			
         			// We add our new id to our search Results hashmap and a light weight version of the Search Object
         			searchResultsObject[unixTimestamp] = {
+        				params: params,
         				searchScope: searchScope,
         				categories: searchObject.categoriesToString, 
         				results: searchObject.resultsToString,
