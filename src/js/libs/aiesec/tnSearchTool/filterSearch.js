@@ -128,6 +128,7 @@ var aiesec = (function(aiesec, undefined) {
 				self.emptyResults(false);
 
 				var params = self.searchParams();
+				var searchScope = scopesDictionary[params.scope];
 
 				//We are going to save that specific search
 				var categories = 0;
@@ -156,6 +157,7 @@ var aiesec = (function(aiesec, undefined) {
         			
         			// We add our new id to our search Results hashmap and a light weight version of the Search Object
         			searchResultsObject[unixTimestamp] = {
+        				searchScope: searchScope,
         				categories: searchObject.categoriesToString, 
         				results: searchObject.resultsToString,
         				timestamp: searchObject.dateToString,

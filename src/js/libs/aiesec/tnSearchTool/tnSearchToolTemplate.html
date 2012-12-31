@@ -45,6 +45,7 @@
     <h5 class="caption-title-bottom"> Load a search<small> Clear all <i data-bind="click:clearSavedSearches" class="icon-trash"></i></small></h5>
     <!-- ko foreach: savedSearchResults -->
     <div class="caption">
+      <small data-bind="text: searchScope"> SCOPE </small><br/>
       <h6 data-bind="text: timestamp">TIMESTAMP</h6>
       <span data-bind="text: categories" class="label label-info"> CATEGORIES </span>&nbsp;<span data-bind="text: results" class="label label-inverse"> RESULTS</span>
       <div class="icons">
