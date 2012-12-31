@@ -23,7 +23,44 @@ var aiesec = (function(aiesec, undefined) {
 			dom.innerHTML = html;
 			$(dom).find('script').remove();
 
-			console.log($(dom).text());
+			// All the rows in the page with a bgcolor (results)
+			var rows = $(dom).find("tr[bgcolor^='#F']");
+
+
+			var parsedArray = [];
+			$.each(rows, function(i,v){
+				var row = $(v);
+				var cells = $(row).find("td");
+				var TN = {};
+				$.each(cells, function(j, w) {					
+					var cell = $(w);
+					var key;
+					if(j == 0){
+						cell = cell.find("a");
+						key = "id";
+					}
+
+					else if(j == 1) {
+						key = "organization";
+					}
+
+					else if(j == 2) {
+						key = "committee";
+					}
+
+					else if(j == 3) {
+						key = "country";
+					}
+
+					else {
+						key = "date";
+					}
+
+					TN[key] = cell.html();
+				});
+				parsedArray.push(TN);
+			});
+			return parsedArray;
 		}
 
 		self.parseDemandResults = function(html) {

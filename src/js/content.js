@@ -50,8 +50,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			var parser = new aiesec.parser();
 			parserRequest.success = function(data) {
 				var result = parser.parseBackgroundResults(data);
-				console.log(result);
-				//sendResponse(result);
+				sendResponse(result);
 			};
 
 			parserRequest.error = function(data) {
