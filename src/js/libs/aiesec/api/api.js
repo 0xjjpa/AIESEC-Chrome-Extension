@@ -135,6 +135,19 @@ var aiesec = (function(aiesec, undefined) {
 		}
 
 		self.searchDemand = function(params, container) {
+			
+			/*
+			// Usually, the scope for the region and country are sent through the scope right? That makes sense, RIGHT?
+			// Well, an international query uses the scope as subscope and subscope as scope. Because of reasons.
+			// http://theprofoundprogrammer.com/post/33379901950/text-please-dont-make-me-do-this-again
+			if (params.scope == 13426545) { // International query value
+				var tmp = params.scope;
+				params.scope = params.subscope;
+				params.subscope = tmp;
+			}
+			This was change in the Filter Search to make more sense.......
+			*/
+
 			var data = {
 				operation:"toptentn",
 				type:"demand",

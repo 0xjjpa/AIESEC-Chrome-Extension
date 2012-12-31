@@ -19,6 +19,9 @@ var aiesec = (function(aiesec, undefined) {
 		var api = new aiesec.api();
 		var SEARCH_RESULTS_KEY = "searchResults";
 
+		var scopesDictionary = {1: "AIESEC International", 2: "Region", 3: "Country"};
+		var scopesArray = [{name:"AIESEC International", scopeValue: 1},{name: "Region", scopeValue: 2}, {name:"Country", scopeValue: 3}];
+
 		var SearchResultCollection = function(id, timestamp, searchResults, categories, results) {
 			var self = {};
 
@@ -117,11 +120,14 @@ var aiesec = (function(aiesec, undefined) {
 		}
 
 		self.searchResults.subscribe(function(value) {
+			self.firstSearch(false);
 			if(self.wasLoadedFromSearch()) {
 				self.wasLoadedFromSearch(false);				
 				self.emptyResults(false);
 			} else if(value.length > 0) {
 				self.emptyResults(false);
+
+				var params = self.searchParams();
 
 				//We are going to save that specific search
 				var categories = 0;
@@ -180,6 +186,7 @@ var aiesec = (function(aiesec, undefined) {
     			});				
 			} else {
 				self.emptyResults(true);
+				self.isLoading(false);
 			}
 		});
 
@@ -212,10 +219,7 @@ var aiesec = (function(aiesec, undefined) {
 			return options;
 		});
 		
-		self.searchScopeOptions = ko.observableArray(
-			[{name:"AIESEC International", scopeValue: 13426545},
-			{name: "Region", scopeValue: 2}, //Regional Scope value is 2
-			{name:"Country", scopeValue: 3}]); // Country Scope value is 3
+		self.searchScopeOptions = ko.observableArray(scopesArray); // Country Scope value is 3
 
 		self.selectedScope = ko.observable();
 		self.selectedScopeLevel = ko.observable();
@@ -226,9 +230,9 @@ var aiesec = (function(aiesec, undefined) {
 
 		var onScopeChange = function(scopeValue) {
 			switch(scopeValue) {
-				case 13426545: //International id provided by MyAIESEC
+				case 1: //International id provided by MyAIESEC
 				self.selectedScopeLevel('international');
-				self.selectedSubscope(1);
+				self.selectedSubscope(13426545);
 				self.selectedScopeHasSubscope(false);
 				break; 				
 
@@ -270,10 +274,12 @@ var aiesec = (function(aiesec, undefined) {
 				break;
 			}
 		}
+
+		self.searchParams = ko.observable();
 	
 		self.submitSearch = function() {
-			self.isLoading(true);
 			self.searchResults([]); // Empty results to show loading;
+			self.isLoading(true);			
 			var params = {
 				scope: self.selectedScope(),
 				subscope: self.selectedSubscope(),
@@ -281,6 +287,7 @@ var aiesec = (function(aiesec, undefined) {
 				start: self.startDuration(),
 				end: self.endDuration()
 			};
+			self.searchParams(params);
 			api.searchDemand(params, self.searchResults);
 		}
 
