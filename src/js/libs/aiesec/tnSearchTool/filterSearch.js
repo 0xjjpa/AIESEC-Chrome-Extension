@@ -64,7 +64,16 @@ var aiesec = (function(aiesec, undefined) {
 				}
 			}			
 			self.loadedTN(value);
-		})
+		});
+
+		self.hideTN = function(background) {
+			var index = self.backgroundResults.indexOf(background);
+			background.showTNSummary(false);
+			
+			self.updatingTN = true;
+			self.backgroundResults.replace(self.backgroundResults()[index], background);
+			return false;
+		}
 
 		self.updatingTN = false;
 		self.selectedTN = ko.observable({});
@@ -74,16 +83,22 @@ var aiesec = (function(aiesec, undefined) {
 			var index = self.backgroundResults.indexOf(selectedTN);
 			
 			selectedTN.tnSummary( value );
+			selectedTN.showTNSummary( true );
 			self.updatingTN = true;
 			self.backgroundResults.replace(self.backgroundResults()[index], selectedTN);
 		});
 
 		self.loadTN = function(selectedTN) {
-			var params = {
+			// We previously loaded the TN, just show them
+			if(selectedTN.tnSummary()) {
+				selectedTN.showTNSummary(true);
+			} else {
+				var params = {
 					TNId: selectedTN.databaseId
-			};
-			self.selectedTN(selectedTN);
-			api.searchTN(params, self.TNDumpObject);	
+				};
+				self.selectedTN(selectedTN);
+				api.searchTN(params, self.TNDumpObject);	
+			}
 			return false;
 		}
 
@@ -147,6 +162,7 @@ var aiesec = (function(aiesec, undefined) {
 
 			var observedBackgrounds = $.map(value, function(background) {
 				background.tnSummary = ko.observable();
+				background.showTNSummary = ko.observable(false);
 				return background;
 			});
 

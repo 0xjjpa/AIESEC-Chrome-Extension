@@ -92,13 +92,29 @@
             <div class="caption-half-holder">
               <h5>Country <small data-bind="text: country">COUNTRY</small></h5>
               <h5>Date Released <small data-bind="text: date">DATE</small></h5>
-              <h5><a data-bind="click: $parents[1].loadTN, clickBubble: false" href="#">View summary</a></h5>
+
+              <!-- ko ifnot: showTNSummary -->
+              <h5><a data-bind="click: $parents[1].loadTN, clickBubble: false" href="#">View summary</a>
+                &nbsp;<a class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+              </h5>
+              <!-- /ko -->
+
+              <!-- ko if: showTNSummary -->
+              <h5><a data-bind="click: $parents[1].hideTN, clickBubble: false" href="#">Hide summary</a>
+                &nbsp;<a class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+              </h5>
+              <!-- /ko -->
+
             </div>
+
+            <!-- ko if: showTNSummary -->
             <div class="caption-holder tnSummary" data-bind="with: tnSummary">
-              <h6>About</h6><span data-bind="text: about">ABOUT</span><br/>
-              <h6>Department</h6><span data-bind="text: department">DEPARTMENT</span><br/>
-              <h6>Description</h6><span data-bind="text: description">DESCRIPTION</span>
+              <h6>About</h6><span data-bind="text: about">ABOUT</span><br/><br/>
+              <h6>Department</h6><span data-bind="text: department">DEPARTMENT</span><br/><br/>
+              <h6>Job Description</h6><span data-bind="text: description">DESCRIPTION</span>
             </div>
+            <!-- /ko -->
+
             <hr>
           </div>
           <!-- /ko -->
