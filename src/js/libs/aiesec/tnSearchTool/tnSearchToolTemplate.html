@@ -75,9 +75,21 @@
             </div>
           </div>
           <i class="arrow icon-chevron-right"></i>
+          <!-- ko if: showBackgroundResults -->
           <div class="caption" data-bind="foreach: backgroundResults">
-            <p data-bind="text: ko.toJSON($data)"></p>
+            <div class="caption-half-holder">
+              <h5>TN's Id <small data-bind="text: id">ID</small></h5>
+              <h5>Organization <small data-bind="text: organization">ORGANIZATION</small></h5>
+              <h5>Committee <small data-bind="text: committee">COMMITTEE</small></h5>
+            </div>
+            <div class="caption-half-holder">
+              <h5>Country <small data-bind="text: country">COUNTRY</small></h5>
+              <h5>Date Released <small data-bind="text: date">DATE</small></h5>
+              <h5>Options <a href="#">Load TN</a></h5>
+            </div>
+            <hr>
           </div>
+          <!-- /ko -->
         </div>
         <!-- /ko -->
       <!-- /ko -->

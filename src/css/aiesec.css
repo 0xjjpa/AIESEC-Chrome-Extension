@@ -130,5 +130,5 @@
 }
 #aiesec-search-tn .caption-half-holder {
   width: 48%;
-  display: inline-block;
+  display: inline-table;
 }

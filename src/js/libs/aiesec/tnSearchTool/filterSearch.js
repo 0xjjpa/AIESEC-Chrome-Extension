@@ -59,7 +59,7 @@ var aiesec = (function(aiesec, undefined) {
 				self.wasLoadedFromSearch(true);
 				self.currentSearch("> "+savedResultObject.dateToString);
 				self.searchParams(savedResult.params);
-				self.searchResults(savedResultObject.searchResults);
+				self.searchResultsDumpContainer(savedResultObject.searchResults);
 			});
 		}
 
