@@ -1,6 +1,6 @@
 {
   "name": "AIESEC TN Search App",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "manifest_version": 2,
   "description": "A simple TN Search Tool in order to optimize the process of searching for TN's",  
   "content_scripts" : [{
