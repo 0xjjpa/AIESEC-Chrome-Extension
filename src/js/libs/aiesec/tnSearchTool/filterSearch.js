@@ -114,21 +114,36 @@ var aiesec = (function(aiesec, undefined) {
 
 		});
 
-		self.loadBackground = function(background) {
-			var searchParams = self.searchParams();
-
-			var params = {
-				start: searchParams.start,
-				end: searchParams.end,
-				exchange: searchParams.exchange,
-				scope: searchParams.scope,
-				subscope: searchParams.subscope,
-				backgroundId: background.id,
-				backgroundName: background.name
-			};
+		self.hideBackground = function(background) {
+			var index = self.searchResults.indexOf(background);
+			background.showBackgroundResults(false);
 			
-			self.selectedBackground(background);
-			api.searchBackground(params, self.backgroundResults);
+			self.updatingBackground = true;
+			self.searchResults.replace(self.searchResults()[index], background);
+			return false;
+		}
+
+		self.loadBackground = function(background) {
+			// We previously loaded the backgrounds, just show them
+			if(background.backgroundResults().length > 0) {
+				background.showBackgroundResults(true);
+			} else {
+				var searchParams = self.searchParams();
+
+				var params = {
+					start: searchParams.start,
+					end: searchParams.end,
+					exchange: searchParams.exchange,
+					scope: searchParams.scope,
+					subscope: searchParams.subscope,
+					backgroundId: background.id,
+					backgroundName: background.name
+				};
+			
+				self.selectedBackground(background);
+				api.searchBackground(params, self.backgroundResults);	
+			}
+			return false;
 		}
 
 		self.loadSearchCollections = function() {
@@ -170,8 +185,10 @@ var aiesec = (function(aiesec, undefined) {
 				self.emptyResults(false);
 
 			} else if(self.updatingBackground) {
+				self.updatingBackground = false;
+				console.log(ko.toJS(value));
 				// Show loading from background
-
+				// Reset updating flag
 			} else if(value.length > 0) {
 				self.emptyResults(false);
 

@@ -99,7 +99,8 @@ var aiesec = (function(aiesec, undefined) {
 					name: resultName, 
 					count: $(anchorWithCount).text(), 
 					showBackgroundResults: false,
-					backgroundResults: []
+					backgroundResults: [],
+					containerClass: ""
 				};
 			})
 

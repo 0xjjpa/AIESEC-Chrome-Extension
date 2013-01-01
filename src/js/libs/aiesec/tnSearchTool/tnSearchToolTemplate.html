@@ -67,14 +67,21 @@
 
       <!-- ko ifnot:emptyResults -->
         <!-- ko foreach:searchResults-->
-        <div data-bind="click: $parents[0].loadBackground" class="thumbnail result">
+        <div data-bind="click: $parents[0].loadBackground, css: { result: !showBackgroundResults() }" class="thumbnail">
           <div class="caption">
             <div class="caption-holder">
               <h5 data-bind="text:name">NAME</h5>
               <small>Found <span data-bind="text:count">COUNT</span></small>
             </div>
           </div>
-          <i class="arrow icon-chevron-right"></i>
+
+          <!-- ko ifnot: showBackgroundResults -->
+          <i class="arrow icon-chevron-right "></i>
+          <!-- /ko -->
+          <!-- ko if: showBackgroundResults -->
+          <i data-bind="click: $parents[0].hideBackground, clickBubble: false" class="arrow icon-chevron-down "></i>
+          <!-- /ko -->
+          
           <!-- ko if: showBackgroundResults -->
           <div class="caption" data-bind="foreach: backgroundResults">
             <div class="caption-half-holder">
@@ -85,7 +92,7 @@
             <div class="caption-half-holder">
               <h5>Country <small data-bind="text: country">COUNTRY</small></h5>
               <h5>Date Released <small data-bind="text: date">DATE</small></h5>
-              <h5>Options <a href="#">Load TN</a></h5>
+              <h5><a href="#">View summary</a></h5>
             </div>
             <hr>
           </div>
