@@ -94,7 +94,13 @@ var aiesec = (function(aiesec, undefined) {
 					var resultId = match[1];
 					var resultName = match[2];
 				}
-				parsedArray[i] = {id: resultId, name: resultName, count: $(anchorWithCount).text()};
+				parsedArray[i] = {
+					id: resultId, 
+					name: resultName, 
+					count: $(anchorWithCount).text(), 
+					showBackgroundResults: false,
+					backgroundResults: []
+				};
 			})
 
 			return parsedArray;

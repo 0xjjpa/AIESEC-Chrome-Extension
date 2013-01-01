@@ -64,6 +64,7 @@
     <h5 class="caption-title"> Results 
     <small data-bind="text: currentSearch"></small>
   </h5>
+
       <!-- ko ifnot:emptyResults -->
         <!-- ko foreach:searchResults-->
         <div data-bind="click: $parents[0].loadBackground" class="thumbnail result">
@@ -74,11 +75,15 @@
             </div>
           </div>
           <i class="arrow icon-chevron-right"></i>
+          <div class="caption" data-bind="foreach: backgroundResults">
+            <p data-bind="text: ko.toJSON($data)"></p>
+          </div>
         </div>
         <!-- /ko -->
       <!-- /ko -->
 
       <!-- ko if:emptyResults -->
+
         <!-- ko if:isLoading -->
         <div class="thumbnail">
           <div class="caption">
@@ -112,6 +117,8 @@
           <!-- /ko -->
 
         <!-- /ko -->
+
       <!-- /ko -->
+
   </div>
 </div>

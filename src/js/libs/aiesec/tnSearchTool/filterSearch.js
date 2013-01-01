@@ -98,13 +98,23 @@ var aiesec = (function(aiesec, undefined) {
 		self.searchResults = ko.observableArray([]);
 		self.currentSearch = ko.observable("");
 
+		self.selectedBackground = ko.observable();
+		self.updatingBackground = false;
+
 		self.backgroundResults = ko.observableArray([]);
-
 		self.backgroundResults.subscribe(function(value){
-			console.log(value);
-		})
 
-		self.loadBackground = function(searchResult) {
+			var selectedBackground = self.selectedBackground();
+			var index = self.searchResults.indexOf(selectedBackground);
+			
+			selectedBackground.backgroundResults(value);
+			selectedBackground.showBackgroundResults(true);
+			self.updatingBackground = true;
+			self.searchResults.replace(self.searchResults()[index], selectedBackground);
+
+		});
+
+		self.loadBackground = function(background) {
 			var searchParams = self.searchParams();
 
 			var params = {
@@ -113,10 +123,11 @@ var aiesec = (function(aiesec, undefined) {
 				exchange: searchParams.exchange,
 				scope: searchParams.scope,
 				subscope: searchParams.subscope,
-				backgroundId: searchResult.id,
-				backgroundName: searchResult.name
+				backgroundId: background.id,
+				backgroundName: background.name
 			};
 			
+			self.selectedBackground(background);
 			api.searchBackground(params, self.backgroundResults);
 		}
 
@@ -142,11 +153,25 @@ var aiesec = (function(aiesec, undefined) {
         	});		
 		}
 
+		self.searchResultsDumpContainer = ko.observableArray([]);
+		self.searchResultsDumpContainer.subscribe(function(value){
+			var observedSearchResults = $.map(value, function(searchResult) {
+				searchResult.backgroundResults = ko.observableArray([]);
+				searchResult.showBackgroundResults = ko.observable(false);
+				return searchResult;
+			});
+			self.searchResults(observedSearchResults);
+		});
+
 		self.searchResults.subscribe(function(value) {
 			self.firstSearch(false);
 			if(self.wasLoadedFromSearch()) {
 				self.wasLoadedFromSearch(false);				
 				self.emptyResults(false);
+
+			} else if(self.updatingBackground) {
+				// Show loading from background
+
 			} else if(value.length > 0) {
 				self.emptyResults(false);
 
@@ -315,7 +340,7 @@ var aiesec = (function(aiesec, undefined) {
 				end: self.endDuration()
 			};
 			self.searchParams(params);
-			api.searchDemand(params, self.searchResults);
+			api.searchDemand(params, self.searchResultsDumpContainer);
 		}
 
 		self.selectedScope.subscribe(onScopeChange);
