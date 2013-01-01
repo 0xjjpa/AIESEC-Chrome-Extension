@@ -97,6 +97,10 @@
 #aiesec-search-tn #results {
   max-height: 425px;
 }
+#aiesec-search-tn .tnSummary {
+  margin-top: 10px;
+  font-size: .8em;
+}
 #aiesec-search-tn .caption-title {
   position: absolute;
   top: 53px;

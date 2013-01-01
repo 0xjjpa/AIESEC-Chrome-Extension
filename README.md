@@ -13,15 +13,20 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 ## List of Features
 
 * Profile per AIESECer
-* Search for TN categories 
-* Sort TN categories by name (Next release)
-* Search TN categories through a text input field (Next release)
+* Search for TN categories based in Location (International, Region or Country)
 * Ability to save previous searchs
+* TN Manager
 
-## Things to add
+## Things to add / Ideas to improve UI/UX
 
-* Ability to see which params were chosen in a saved search
-* Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage.
+UI/UX
+* Sorting mechanism
+* Searching the results (TN categories) through a text input field
+* Ability to see which params were chosen in a saved search (name of country/region)
+
+Technical
+* Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage (Currently we are indexing two dictionaries, one working as a HashTable and the other as the actual storage).
+* Usage of the Sync library instead of the Local one.
 
 ## Notes
 
@@ -33,7 +38,11 @@ Currently this repository still holds the content of an improved Google Chrome a
 * Twitter Bootstrap
 * KnockoutJS
 
-Sadly, due new changes to Chrome 22, the KnockoutJS templating system was forbidden due it's use of inline eval. This delayed the release date for about 4 months, and the project has been stopped so far even though development has continued in more subtle ways.
+## Background
+
+Due new changes to Chrome 22, the KnockoutJS templating system was forbidden due it's use of inline eval. This delayed the release date for about 4 months, and the project has been stopped so far even though development has continued in more subtle ways.
+
+In December 2012, Chrome 22 released a new manifest rule that loosed the restrictions for KnockoutJS templating, allowing me to continue with the project.
 
 ### Current tested solutions in order to deploy application
 

@@ -17,6 +17,36 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
+		self.parseTN = function(html) {
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			var rows = $(dom).find('div.container div.left-content.box tr');
+			var TN = {};
+
+			// Here's where we "guess" which row is each value...
+			$.each(rows, function(i,v){
+				var row = $(v);
+				var key;
+				if(i == 4) { // About the company
+					row = row.find("td");
+					key = "about";
+				} else if (i == 7){ // Department
+					row = $(row.find("td")[1]);
+					key = "department";
+				} else  if (i == 8) {
+					row = $(row.find("td")[1]);
+					key = "description";
+				}
+
+				if(key)	TN[key] = row.html();
+			});
+
+			return TN;
+		}
+
 		self.parseBackgroundResults = function(html) {
 			// We ensure javascript is not executed
 			var dom = document.createElement('div');
@@ -32,6 +62,7 @@ var aiesec = (function(aiesec, undefined) {
 				var row = $(v);
 				var cells = $(row).find("td");
 				var TN = {};
+				// Here's where we "guess" which row is each value...
 				$.each(cells, function(j, w) {					
 					var cell = $(w);
 					var key;
@@ -56,7 +87,23 @@ var aiesec = (function(aiesec, undefined) {
 						key = "date";
 					}
 
-					TN[key] = cell.html();
+					if(key) TN[key] = cell.html();
+
+					//Special case, actual database ID + Structure for binding
+					if(j == 0) {
+						var attr = cell.attr("onclick");
+						var regex = /viewTN\('([^\']+)'\)/g;
+						var match = regex.exec(attr);
+						if (match) {
+							var databaseId = match[1];
+						}
+						TN["databaseId"] = databaseId;
+						TN["tnSummary"] = {
+							about: "",
+							department: "",
+							description: ""
+						};
+					};
 				});
 				parsedArray.push(TN);
 			});

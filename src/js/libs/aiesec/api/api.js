@@ -134,6 +134,23 @@ var aiesec = (function(aiesec, undefined) {
 			// self.fakeRequest(user, container);
 		}
 
+		self.searchTN = function(params, container) {
+			var data =  {
+				operation:"executeAction",
+				tnId:params.TNId
+			};
+			
+			var params = {
+				url: "http://www.myaiesec.net/exchange/viewtn.do",
+				data: data,
+				type: "GET",
+				dataType: "text"
+			};
+
+			var request = {command: "getTN", params: params};
+			self.request(request, container);
+		}
+
 		self.searchBackground = function(params, container) {
 			var data = {
 				operation:"backgroundpopupTN",

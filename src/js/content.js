@@ -30,6 +30,22 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 			firebase.loadLobby(myself);
 			break;
 
+		case "getTN":
+			var parser = new aiesec.parser();
+
+			parserRequest.success = function(data) {
+				var result = parser.parseTN(data);
+				sendResponse(result);
+			};
+
+			parserRequest.error = function(data) {
+				console.log("ERROR");
+				var jxhr = data;
+			};
+
+		callAjax = true;
+		break;
+
 		case "getNationalList":
 			var parser = new aiesec.parser();
 

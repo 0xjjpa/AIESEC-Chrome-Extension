@@ -92,7 +92,12 @@
             <div class="caption-half-holder">
               <h5>Country <small data-bind="text: country">COUNTRY</small></h5>
               <h5>Date Released <small data-bind="text: date">DATE</small></h5>
-              <h5><a href="#">View summary</a></h5>
+              <h5><a data-bind="click: $parents[1].loadTN, clickBubble: false" href="#">View summary</a></h5>
+            </div>
+            <div class="caption-holder tnSummary" data-bind="with: tnSummary">
+              <h6>About</h6><span data-bind="text: about">ABOUT</span><br/>
+              <h6>Department</h6><span data-bind="text: department">DEPARTMENT</span><br/>
+              <h6>Description</h6><span data-bind="text: description">DESCRIPTION</span>
             </div>
             <hr>
           </div>

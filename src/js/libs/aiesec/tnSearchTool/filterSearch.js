@@ -22,6 +22,16 @@ var aiesec = (function(aiesec, undefined) {
 		var scopesDictionary = {1: "AIESEC International", 2: "Region", 3: "Country"};
 		var scopesArray = [{name:"AIESEC International", scopeValue: 1},{name: "Region", scopeValue: 2}, {name:"Country", scopeValue: 3}];
 
+		var TNWrapper = function(data) {
+			var self = {};
+
+			self.about = ko.observable(data.about);
+			self.department = ko.observable(data.department);
+			self.description = ko.observable(data.description);
+
+			return self;
+		}
+
 		var SearchResultCollection = function(id, timestamp, searchResults, categories, results) {
 			var self = {};
 
@@ -44,6 +54,37 @@ var aiesec = (function(aiesec, undefined) {
 			})();
 
 			return self;
+		}
+
+		self.TNDumpObject = ko.observable({});
+		self.TNDumpObject.subscribe(function(value) {
+			for (var key in value) {
+				if (value.hasOwnProperty(key)) {
+					value[key] = ko.observable(value[key]);
+				}
+			}			
+			self.loadedTN(value);
+		})
+
+		self.updatingTN = false;
+		self.selectedTN = ko.observable({});
+		self.loadedTN = ko.observable({});
+		self.loadedTN.subscribe(function(value) {
+			var selectedTN = self.selectedTN();
+			var index = self.backgroundResults.indexOf(selectedTN);
+			
+			selectedTN.tnSummary( value );
+			self.updatingTN = true;
+			self.backgroundResults.replace(self.backgroundResults()[index], selectedTN);
+		});
+
+		self.loadTN = function(selectedTN) {
+			var params = {
+					TNId: selectedTN.databaseId
+			};
+			self.selectedTN(selectedTN);
+			api.searchTN(params, self.TNDumpObject);	
+			return false;
 		}
 
 		self.clearSavedSearches = function() {
@@ -101,17 +142,31 @@ var aiesec = (function(aiesec, undefined) {
 		self.selectedBackground = ko.observable();
 		self.updatingBackground = false;
 
+		self.backgroundResultsDumpContainer = ko.observableArray([]);
+		self.backgroundResultsDumpContainer.subscribe(function(value){
+
+			var observedBackgrounds = $.map(value, function(background) {
+				background.tnSummary = ko.observable();
+				return background;
+			});
+
+			self.backgroundResults(observedBackgrounds);
+		});
+
+
 		self.backgroundResults = ko.observableArray([]);
 		self.backgroundResults.subscribe(function(value){
-
-			var selectedBackground = self.selectedBackground();
-			var index = self.searchResults.indexOf(selectedBackground);
-			
-			selectedBackground.backgroundResults(value);
-			selectedBackground.showBackgroundResults(true);
-			self.updatingBackground = true;
-			self.searchResults.replace(self.searchResults()[index], selectedBackground);
-
+			if( self.updatingTN ) {
+				self.updatingTN = false;
+			} else {
+				var selectedBackground = self.selectedBackground();
+				var index = self.searchResults.indexOf(selectedBackground);
+				
+				selectedBackground.backgroundResults(value);
+				selectedBackground.showBackgroundResults(true);
+				self.updatingBackground = true;
+				self.searchResults.replace(self.searchResults()[index], selectedBackground);
+			}
 		});
 
 		self.hideBackground = function(background) {
@@ -141,7 +196,7 @@ var aiesec = (function(aiesec, undefined) {
 				};
 			
 				self.selectedBackground(background);
-				api.searchBackground(params, self.backgroundResults);	
+				api.searchBackground(params, self.backgroundResultsDumpContainer);	
 			}
 			return false;
 		}
@@ -186,7 +241,6 @@ var aiesec = (function(aiesec, undefined) {
 
 			} else if(self.updatingBackground) {
 				self.updatingBackground = false;
-				console.log(ko.toJS(value));
 				// Show loading from background
 				// Reset updating flag
 			} else if(value.length > 0) {
