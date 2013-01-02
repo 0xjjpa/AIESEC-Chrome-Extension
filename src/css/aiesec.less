@@ -15,16 +15,38 @@
 	.thumbnail{margin-bottom: 4px;}
 	.hero-unit{margin-bottom: 0px;}
 
-	.span4, .span6 {
+	.span3, .span4, .span5, .span6,  .span7{
 		padding: 20px;
+	}
+
+	.span3 {
+		width: 180px;
 	}
 
 	.span4 {
 		width: 260px;
 	}
 
+	.span5 {
+		width: 340px;
+	}
+
 	.span6 {
 		width: 420px;
+	}
+
+	.caption-holder {
+		h5 {
+			display: inline;
+		}
+		small {
+			color: #999;
+			font-size: .8em;
+		}
+		width: 98%; display:block;	
+	}
+	.caption-half-holder {
+		width: 48%; display:inline-table;		
 	}
 }
 
@@ -69,6 +91,45 @@
 		margin-right: 8px;
 		width: 10px;
 		height: 10px;
+	}
+}
+
+#aiesec-monitor-tn {
+	i {
+		cursor: pointer;
+	}
+
+
+	.caption-title {
+		position: absolute;
+		top: 53px;
+	}
+
+	.tnId {
+		position: relative;
+	}
+
+	.monitoredTN {
+		h5 {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: 96%;
+		}
+		small{
+			font-size: .8em;	
+		}
+		.icons {
+			float: right;
+		}
+	}
+
+	#backlog {
+		
+	}
+
+	#inspector {
+		
 	}
 }
 
@@ -133,17 +194,4 @@
 		top: -25px;
 	}
 
-	.caption-holder {
-		h5 {
-			display: inline;
-		}
-		small {
-			color: #999;
-			font-size: .8em;
-		}
-		width: 98%; display:block;	
-	}
-	.caption-half-holder {
-		width: 48%; display:inline-table;		
-	}
 }

@@ -1,4 +1,50 @@
-<div class="span4 first" data-bind="with: core">
-  <div id="options" class="thumbnail main" data-bind="with: tnMonitor">
-  </div>
+<div class="span5 first" data-bind="with: core">
+	<div id="backlog" class="thumbnail main" data-bind="with: tnMonitor">
+		<h5 class="caption-title"> Monitored TN's List
+			<small>Refresh list <i data-bind="click: loadMonitoredTNs" class="icon-refresh"></i></small>
+		</h5>
+		<!-- ko if:isEmpty-->
+		<div class="thumbnail">
+			<div class="caption">
+				<div class="caption-holder">
+					<small>A list of monitored TN's will be displayed here. Use the TN Search Tool to monitor a TN. </small>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+		<!-- ko foreach:monitoredTNs-->
+		<div class="thumbnail monitoredTN">
+			<div class="caption">
+				<div class="icons">
+					<i class="icon-share-alt"></i>&nbsp;<i class="icon-remove"></i>
+				</div>
+				<div class="caption-holder">
+					<span data-bind="text: id" class="tnId label label-info">TN ID</span><br/><br/>
+					<h5> Background <small data-bind="text: category">CATEGORY</small></h5><br/>
+				</div>
+				<div class="caption-holder">
+					<h5> Organization <small data-bind="text: organization">ORGANIZATION</small></h5>
+					<h5> Country <small data-bind="text: country">COUNTRY</small></h5>
+				</div>
+				<div class="caption-holder">
+					<h5> Committee <small data-bind="text: committee">COMMITTEE</small></h5>
+					<h5> Date <small data-bind="text: date">DATE</small></h5>				
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+	</div>
+</div>
+
+<div class="span5 last" data-bind="with: core">
+	<div id="inspector" class="thumbnail main" data-bind="with: tnMonitor">                        
+		<h5 class="caption-title"> TN Inspector</h5>
+		<div class="thumbnail">
+			<div class="caption">
+				<div class="caption-holder">
+					<h5>Select a monitored TN to display its details.</h5>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

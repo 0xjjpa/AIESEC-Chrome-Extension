@@ -41,7 +41,13 @@ var aiesec = (function(aiesec, undefined) {
         			
         		chrome.storage.local.set( TNsHashMapObjectTemp, function() { 
         			var TNObject = {};
-        			TNObject[TN.id] = {isMonitored: true};
+        			TNObject[TN.id] = {
+        				category: self.selectedBackground().name,
+        				organization: TN.organization,
+        				date: TN.date,
+        				country: TN.country,
+        				committee: TN.committee
+        			};
         			chrome.storage.local.remove( TNObject, function() {
         				// We added a flag indicating we are storing a TN
         				console.log("Removed TN successfully");
@@ -60,7 +66,15 @@ var aiesec = (function(aiesec, undefined) {
         		}
 
         		var TNsHashMapObject = TNsHashMap[TN_MONITOR_KEY];
-        		TNsHashMapObject[TN.id] = TN;
+        		TNsHashMapObject[TN.id] = {
+        			id: TN.id,
+        			databaseId: TN.databaseId,
+        			category: self.selectedBackground().name,
+        			organization: TN.organization,
+        			date: TN.date,
+        			country: TN.country,
+        			committee: TN.committee
+        		};
 
         		var TNsHashMapObjectTemp = {};
         		TNsHashMapObjectTemp[TN_MONITOR_KEY] = TNsHashMapObject;

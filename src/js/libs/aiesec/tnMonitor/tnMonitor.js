@@ -15,10 +15,38 @@ var aiesec = (function(aiesec, undefined) {
 	*/
 	aiesec.tnMonitor = function() {
 
-		var self = {};		
+		var self = {};
+		var TN_MONITOR_KEY = "monitoredTNs";
+
+		self.loadMonitoredTNs = function() {
+			chrome.storage.local.get( TN_MONITOR_KEY, function(TNsHashMap) {
+				if(!TNsHashMap[TN_MONITOR_KEY]) {
+        			// Empty Monitored TN's.
+        			TNsHashMap = {};
+        			TNsHashMap[TN_MONITOR_KEY]= {};
+        		}
+
+        		var monitoredTNsArray = [];
+        		var TNsHashMapObject = TNsHashMap[TN_MONITOR_KEY];
+        		for (var key in TNsHashMapObject) {
+        			if(TNsHashMapObject.hasOwnProperty(key)) {
+        				console.log(TNsHashMapObject[key])
+        				monitoredTNsArray.push(TNsHashMapObject[key]);
+        			}
+        		}
+
+        		self.monitoredTNs(monitoredTNsArray);
+        	});
+		}
+
+		self.monitoredTNs = ko.observableArray([]);
+		self.isEmpty = ko.computed(function(){
+			return self.monitoredTNs().length == 0;
+		})
+		
 
 		self.init = function() {
-			// Perform initial load
+			self.loadMonitoredTNs();
 			return self;
 		}
 

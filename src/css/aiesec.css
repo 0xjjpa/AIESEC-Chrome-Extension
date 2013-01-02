@@ -29,15 +29,39 @@
 #aiesec-container .hero-unit {
   margin-bottom: 0px;
 }
+#aiesec-container .span3,
 #aiesec-container .span4,
-#aiesec-container .span6 {
+#aiesec-container .span5,
+#aiesec-container .span6,
+#aiesec-container .span7 {
   padding: 20px;
+}
+#aiesec-container .span3 {
+  width: 180px;
 }
 #aiesec-container .span4 {
   width: 260px;
 }
+#aiesec-container .span5 {
+  width: 340px;
+}
 #aiesec-container .span6 {
   width: 420px;
+}
+#aiesec-container .caption-holder {
+  width: 98%;
+  display: block;
+}
+#aiesec-container .caption-holder h5 {
+  display: inline;
+}
+#aiesec-container .caption-holder small {
+  color: #999;
+  font-size: .8em;
+}
+#aiesec-container .caption-half-holder {
+  width: 48%;
+  display: inline-table;
 }
 #aiesec-profile {
   float: right;
@@ -75,6 +99,28 @@
   margin-right: 8px;
   width: 10px;
   height: 10px;
+}
+#aiesec-monitor-tn i {
+  cursor: pointer;
+}
+#aiesec-monitor-tn .caption-title {
+  position: absolute;
+  top: 53px;
+}
+#aiesec-monitor-tn .tnId {
+  position: relative;
+}
+#aiesec-monitor-tn .monitoredTN h5 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 96%;
+}
+#aiesec-monitor-tn .monitoredTN small {
+  font-size: .8em;
+}
+#aiesec-monitor-tn .monitoredTN .icons {
+  float: right;
 }
 #aiesec-search-tn i {
   cursor: pointer;
@@ -124,19 +170,4 @@
   float: right;
   right: 3px;
   top: -25px;
-}
-#aiesec-search-tn .caption-holder {
-  width: 98%;
-  display: block;
-}
-#aiesec-search-tn .caption-holder h5 {
-  display: inline;
-}
-#aiesec-search-tn .caption-holder small {
-  color: #999;
-  font-size: .8em;
-}
-#aiesec-search-tn .caption-half-holder {
-  width: 48%;
-  display: inline-table;
 }
