@@ -15,7 +15,7 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 * Profile per AIESECer
 * Search for TN categories based in Location (International, Region or Country)
 * Ability to save previous searchs
-* TN Manager
+* TN Monitor: Inspect with detail a given TN
 
 ## Things to add / Ideas to improve UI/UX
 
@@ -24,6 +24,7 @@ UI/UX
 * Searching the results (TN categories) through a text input field
 * Ability to see which params were chosen in a saved search (name of country/region)
 * Same TN's can appear in same categories, only show once or filter through other way
+
 
 Technical
 * Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage (Currently we are indexing two dictionaries, one working as a HashTable and the other as the actual storage).

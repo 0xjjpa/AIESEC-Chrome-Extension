@@ -40,15 +40,7 @@ var aiesec = (function(aiesec, undefined) {
         		TNsHashMapObjectTemp[TN_MONITOR_KEY] = TNsHashMapObject;
         			
         		chrome.storage.local.set( TNsHashMapObjectTemp, function() { 
-        			var TNObject = {};
-        			TNObject[TN.id] = {
-        				category: self.selectedBackground().name,
-        				organization: TN.organization,
-        				date: TN.date,
-        				country: TN.country,
-        				committee: TN.committee
-        			};
-        			chrome.storage.local.remove( TNObject, function() {
+        			chrome.storage.local.remove( TN.id, function() {
         				// We added a flag indicating we are storing a TN
         				console.log("Removed TN successfully");
         			});
@@ -266,6 +258,10 @@ var aiesec = (function(aiesec, undefined) {
 		self.loadBackground = function(background) {
 			// We previously loaded the backgrounds, just show them
 			if(background.backgroundResults().length > 0) {
+				//We still need to check if there was some monitor changes
+				$.map(background.backgroundResults(), function(TN) {
+					self.isBeingMonitored(TN);
+				})
 				background.showBackgroundResults(true);
 			} else {
 				var searchParams = self.searchParams();

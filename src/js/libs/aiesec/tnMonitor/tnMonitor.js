@@ -18,6 +18,31 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var TN_MONITOR_KEY = "monitoredTNs";
 
+		self.removeTn = function(TN) {
+			self.monitoredTNs.remove(TN);
+			
+			chrome.storage.local.get( TN_MONITOR_KEY, function(TNsHashMap) {
+				if(!TNsHashMap[TN_MONITOR_KEY]) {
+        			// First time, we need to ensure there's a map to hold our results.
+        			TNsHashMap = {};
+        			TNsHashMap[TN_MONITOR_KEY]= {};
+        		}
+
+        		var TNsHashMapObject = TNsHashMap[TN_MONITOR_KEY];
+        		delete TNsHashMapObject[TN.id];
+
+        		var TNsHashMapObjectTemp = {};
+        		TNsHashMapObjectTemp[TN_MONITOR_KEY] = TNsHashMapObject;
+        			
+        		chrome.storage.local.set( TNsHashMapObjectTemp, function() { 
+        			chrome.storage.local.remove( TN.id, function() {
+        				// We added a flag indicating we are storing a TN
+        				console.log("Removed TN successfully");
+        			});
+				});
+        	});
+		}
+
 		self.loadMonitoredTNs = function() {
 			chrome.storage.local.get( TN_MONITOR_KEY, function(TNsHashMap) {
 				if(!TNsHashMap[TN_MONITOR_KEY]) {
