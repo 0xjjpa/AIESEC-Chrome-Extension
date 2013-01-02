@@ -16,7 +16,7 @@
 		<div class="thumbnail monitoredTN">
 			<div class="caption">
 				<div class="icons">
-					<i class="icon-share-alt"></i>&nbsp;<i data-bind="click: $parents[0].removeTn" class="icon-remove"></i>
+					<i data-bind="click: $parents[0].loadTN" class="icon-share-alt"></i>&nbsp;<i data-bind="click: $parents[0].removeTn" class="icon-remove"></i>
 				</div>
 				<div class="caption-holder">
 					<span data-bind="text: id" class="tnId label label-info">TN ID</span><br/><br/>
@@ -38,7 +38,14 @@
 
 <div class="span5 last" data-bind="with: core">
 	<div id="inspector" class="thumbnail main" data-bind="with: tnMonitor">                        
-		<h5 class="caption-title"> TN Inspector</h5>
+		<h5 class="caption-title"> TN Inspector
+			<!-- ko if: TNLoaded -->
+			<small>Open in MyAIESEC.net <i data-bind="click: openInMyAIESEC" class="icon-share"></i></small>
+			<!-- /ko -->
+		</h5>
+		<!-- ko ifnot: TNLoaded -->
+
+		<!-- ko ifnot: loading -->
 		<div class="thumbnail">
 			<div class="caption">
 				<div class="caption-holder">
@@ -46,5 +53,56 @@
 				</div>
 			</div>
 		</div>
+		<!-- /ko -->
+
+		<!-- ko if: loading -->
+		<div class="thumbnail">
+			<div class="caption">
+				<div class="caption-holder">
+					<h5>Loading, please wait.</h5>
+				</div>
+			</div>
+		</div>
+		<!-- /ko -->
+
+		<!-- /ko -->
+
+		<!-- ko if: TNLoaded -->
+		<div class="thumbnail" data-bind="with: TNResult">
+			<div class="caption">
+				<div class="caption-holder">
+					<h4>Company <small data-bind="text: fullname"></small></h4><br/>
+					<h4>Job Title <small data-bind="text: position"></small></h4><br/>
+					<h4>Location <small data-bind="html: location"></small></h4><br/>
+
+					<h5>About <small data-bind="text: about"></small></h5><br/>
+					<h5>Department <small data-bind="text: department"></small></h5><br/>
+					<h5>Job Description #1 <small data-bind="text: description"></small></h5><br/>
+					<h5>Job Description #2 <small data-bind="text: description2"></small></h5><br/>
+					<h5>Job Description #3 <small data-bind="text: description3"></small></h5><br/>
+					<h5>Job Description #4 <small data-bind="text: description4"></small></h5><br/>
+					<h5>Job Description #5 <small data-bind="text: description5"></small></h5><br/>
+					<h5>Job Description #6 <small data-bind="text: description6"></small></h5><br/>
+					<h5>Earliest Start Date <small data-bind="text: earliestStartDate"></small></h5><br/>
+					<h5>Latest End Date <small data-bind="text: latestEndDate"></small></h5><br/>
+					<h5>Intern Expectations <small data-bind="text: expectations"></small></h5><br/>
+					<h5>Extra Details <small data-bind="text: extraDetails"></small></h5><br/>
+					<h5>Field <small data-bind="text: field"></small></h5><br/>
+					<h5>Degree <small data-bind="text: degree"></small></h5><br/>
+					<h5>Additional Information <small data-bind="text: additionalInfo"></small></h5><br/>
+					<h5>Learning Experience for Intern <small data-bind="text: learningExperience"></small></h5><br/>
+					
+					<h5>Maximum Duration <small data-bind="text: maximumDuration"></small></h5><br/>
+					<h5>Minimum Duration <small data-bind="text: minimumDuration"></small></h5><br/>
+					
+					<h5>Intern Preparations <small data-bind="text: preparations"></small></h5><br/>
+					<h5>Salary <small data-bind="text: salary"></small></h5><br/>
+					<h5>Schedule <small data-bind="text: schedule"></small></h5><br/>
+					<h5>Working Conditions <small data-bind="text: workConditions"></small></h5>
+				</div>
+			</div>
+		</div>
+
+		<!-- /ko -->
 	</div>
 </div>

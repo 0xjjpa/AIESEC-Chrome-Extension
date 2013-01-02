@@ -122,6 +122,10 @@
 #aiesec-monitor-tn .monitoredTN .icons {
   float: right;
 }
+#aiesec-monitor-tn #inspector .thumbnail h5 small {
+  color: #111;
+  font-size: .9em;
+}
 #aiesec-search-tn i {
   cursor: pointer;
 }

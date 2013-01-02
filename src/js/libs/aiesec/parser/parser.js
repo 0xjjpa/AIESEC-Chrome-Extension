@@ -17,6 +17,164 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
+		self.parseTN = function(html) {
+			// We ensure javascript is not executed
+			var dom = document.createElement('div');
+			dom.innerHTML = html;
+			$(dom).find('script').remove();
+
+			var rows = $(dom).find('div.container div.left-content.box tr');
+			var TN = {};
+
+			// Here's where we "guess" which row is each value...
+			$.each(rows, function(i,v){
+				var row = $(v);
+				var key;
+				var alreadyAdded = false;
+				var requiresTrim = false;
+
+				var backgroundIndexHR = 32; 
+
+				if(i == 0) { //Company full name, position and location
+					var fonts = row.find("td font");
+					$.each(fonts, function(j, w) {
+						var font = $(w);
+						var key2;
+						if (j == 0) { // Company full name
+							key2 = "fullname";
+						} else if (j == 1) {
+							font = font.find("b"); // Job title
+							key2 = "position";
+						} else if (j == 2) {
+							key2 = "location"; // Internship location
+						}
+
+						if(key2) {
+							TN[key2] = font.html();
+							alreadyAdded = true;
+						}
+					});
+				} else if(i == 1) { // Start and End date (as text nodes.... o_O)
+					var dateTextNodes = $(row.find("td")[0]).contents().filter(
+						function() {
+							return this.nodeType == Node.TEXT_NODE;
+					});
+
+					TN["datesTest"] = dateTextNodes.html();
+					alreadyAdded = true;
+
+					/*
+					$.each(dateTextNodes, function(j, w) {
+						var dateTextNode = $(w);
+						var key2;
+						if (j == 0) {
+							key2 = "startDate";
+						} else if( j == 1) {
+							key2 = "endDate";
+						}
+
+						if(key2) {
+							TN[key2] = dateTextNode.html();
+							alreadyAdded = true;
+						}
+					});
+					*/
+				} else if (i == 4) { // About the company
+					row = row.find("td");
+					key = "about";
+				} else if (i == 7) { // Department
+					row = $(row.find("td")[1]);
+					key = "department";
+				} else if (i == 8) { // Job descriptions [1-6]
+					row = $(row.find("td")[1]);
+					key = "description";
+				} else if (i == 9) {
+					row = $(row.find("td")[1]);
+					key = "description2";
+				} else if (i == 10) {
+					row = $(row.find("td")[1]);
+					key = "description3";
+				} else if (i == 11) {
+					row = $(row.find("td")[1]);
+					key = "description4";
+				} else if (i == 12) {
+					row = $(row.find("td")[1]);
+					key = "description5";
+				} else if (i == 13) {
+					row = $(row.find("td")[1]);
+					key = "description6";
+				} else if (i == 14) { // Expectations or Results
+					row = $(row.find("td")[1]);
+					key = "expectations";
+				} else if (i == 15) { // Preparations
+					row = $(row.find("td")[1]);
+					key = "preparations";
+				} else if (i == 16) { // Working conditions
+					row = $(row.find("td")[1]);
+					key = "workConditions";
+					requiresTrim = true;
+				} else if (i == 17) { // Other details
+					row = $(row.find("td")[1]);
+					key = "extraDetails";
+				} else if (i == 18) { // Learning points
+					row = $(row.find("td")[1]);
+					key = "learningExperience";
+				} else if (i == 19) { // Additional information
+					row = $(row.find("td")[1]);
+					key = "additionalInfo";
+				} else if (i == 22) { // Field of Work
+					row = $(row.find("td")[1]);
+					key = "field";
+				} else if (i == 23) { // Working Hours
+					row = $(row.find("td")[1]);
+					key = "schedule";
+					requiresTrim = true;
+				} else if (i == 24) { // Salary
+					row = $(row.find("td")[1]);
+					key = "salary";
+				} else if (i == 27) { // Preferred Date to start
+					row = $(row.find("td")[1]);
+					key = "earliestStartDate";
+					requiresTrim = true;
+				} else if (i == 28) { // Preferred Latest date to end
+					row = $(row.find("td")[1]);
+					key = "latestEndDate";
+					requiresTrim = true;
+				} else if (i == 29) { // Minimum Duration
+					row = $(row.find("td")[1]);
+					key = "minimumDuration";
+					requiresTrim = true;
+				} else if (i == 30) { // Maximum Duration
+					row = $(row.find("td")[1]);
+					key = "maximumDuration";
+					requiresTrim = true;
+				} else if (i == 31) { // Degree
+					row = $(row.find("td")[1]);
+					key = "degree";
+					requiresTrim = true;
+				} else if (i >= 32) { // BACKGROUND HR 
+					// So the backgrounds are generated dinamically, so we need to find
+					// the length of the total backgrounds before going further. We use
+					// a flag on the HR lines to mark the start and end
+					/*
+					row = $(row.find("td"));
+					if (row.length)
+					*/
+				} 
+
+				if(key && !alreadyAdded) {
+					if (requiresTrim) {
+						TN[key] = ($.trim(row.html())).replace(/[\n\r]/g, ' ');	
+					} else {
+						TN[key] = row.html();
+					}
+					
+				}
+			});
+
+			return TN;	
+		}
+
 		self.parseTNSummary = function(html) {
 			// We ensure javascript is not executed
 			var dom = document.createElement('div');

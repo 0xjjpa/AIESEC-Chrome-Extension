@@ -16,7 +16,47 @@ var aiesec = (function(aiesec, undefined) {
 	aiesec.tnMonitor = function() {
 
 		var self = {};
+		var api = new aiesec.api();
 		var TN_MONITOR_KEY = "monitoredTNs";
+
+		self.openInMyAIESEC = function() {
+			var TN = self.selectedTN();
+			chrome.tabs.create({'url': "http://www.myaiesec.net/exchange/viewtn.do?operation=executeAction&tnId="+TN.databaseId}, function(tab) {
+				console.log("Tab opened");
+				console.log(tab);
+			});
+		}
+
+		self.loading = ko.observable(false);
+
+		self.TNResult = ko.observable();
+		self.TNResult.subscribe(function(value) {
+			self.loading(false);
+		})
+
+		self.TNLoaded = ko.computed(function(){
+			return (self.TNResult());
+		});
+		
+		self.selectedTN = ko.observable();
+		self.loadTN = function(TN) {
+			// We check if a the selected one is a previously loaded TN
+			var previousTN = self.selectedTN();
+
+			// Don't load a previously loaded TN
+			if(!previousTN || previousTN.id != TN.id) {
+				self.TNResult(undefined);
+				self.loading(true);
+				var params = {
+					TNId: TN.databaseId
+				};
+
+				self.selectedTN(TN);
+				api.searchTN(params, false, self.TNResult);	
+			}
+			return false;
+
+		}
 
 		self.removeTn = function(TN) {
 			self.monitoredTNs.remove(TN);
@@ -67,7 +107,7 @@ var aiesec = (function(aiesec, undefined) {
 		self.monitoredTNs = ko.observableArray([]);
 		self.isEmpty = ko.computed(function(){
 			return self.monitoredTNs().length == 0;
-		})
+		});
 		
 
 		self.init = function() {

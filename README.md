@@ -19,12 +19,16 @@ A previous attempt was done [here](https://chrome.google.com/webstore/detail/aie
 
 ## Things to add / Ideas to improve UI/UX
 
+Functional
+* Be able to browse through pages were results are over +50
+* Display TN's Background, Skills, Languages and Regions
+
 UI/UX
+
 * Sorting mechanism
 * Searching the results (TN categories) through a text input field
 * Ability to see which params were chosen in a saved search (name of country/region)
 * Same TN's can appear in same categories, only show once or filter through other way
-
 
 Technical
 * Create a specific storage library for Chrome with a B* tree to optimize read to the Chrome Storage (Currently we are indexing two dictionaries, one working as a HashTable and the other as the actual storage).
