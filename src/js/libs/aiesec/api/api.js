@@ -134,7 +134,7 @@ var aiesec = (function(aiesec, undefined) {
 			// self.fakeRequest(user, container);
 		}
 
-		self.searchTN = function(params, container) {
+		self.searchTN = function(params, getSummary, container) {
 			var data =  {
 				operation:"executeAction",
 				tnId:params.TNId
@@ -147,7 +147,12 @@ var aiesec = (function(aiesec, undefined) {
 				dataType: "text"
 			};
 
-			var request = {command: "getTN", params: params};
+			if(getSummary) {
+				var request = {command: "getTNSummary", params: params};
+			} else {
+				var request = {command: "getTN", params: params};	
+			}
+			
 			self.request(request, container);
 		}
 

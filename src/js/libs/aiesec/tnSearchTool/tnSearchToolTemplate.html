@@ -92,16 +92,27 @@
             <div class="caption-half-holder">
               <h5>Country <small data-bind="text: country">COUNTRY</small></h5>
               <h5>Date Released <small data-bind="text: date">DATE</small></h5>
-
               <!-- ko ifnot: showTNSummary -->
               <h5><a data-bind="click: $parents[1].loadTN, clickBubble: false" href="#">View summary</a>
-                &nbsp;<a class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+                <!-- ko ifnot: isBeingMonitored -->
+                &nbsp;<a data-bind="click: $parents[1].monitorTn" class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+                <!-- /ko -->
+
+                <!-- ko if: isBeingMonitored -->
+                &nbsp;<a data-bind="click: $parents[1].unmonitorTn" class="btn btn-mini" href="#"><i class="icon-eye-close"></i> Monitored</a>
+                <!-- /ko -->
               </h5>
               <!-- /ko -->
 
               <!-- ko if: showTNSummary -->
               <h5><a data-bind="click: $parents[1].hideTN, clickBubble: false" href="#">Hide summary</a>
-                &nbsp;<a class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+                <!-- ko ifnot: isBeingMonitored -->
+                &nbsp;<a data-bind="click: $parents[1].monitorTn" class="btn btn-mini" href="#"><i class="icon-eye-open"></i> Monitor</a>
+                <!-- /ko -->
+
+                <!-- ko if: isBeingMonitored -->
+                &nbsp;<a data-bind="click: $parents[1].unmonitorTn" class="btn btn-mini" href="#"><i class="icon-eye-close"></i> Monitored</a>
+                <!-- /ko -->
               </h5>
               <!-- /ko -->
 

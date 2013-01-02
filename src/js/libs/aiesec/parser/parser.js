@@ -17,7 +17,7 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};
 		var $ = jQuery;
 
-		self.parseTN = function(html) {
+		self.parseTNSummary = function(html) {
 			// We ensure javascript is not executed
 			var dom = document.createElement('div');
 			dom.innerHTML = html;

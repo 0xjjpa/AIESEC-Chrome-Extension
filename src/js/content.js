@@ -46,6 +46,22 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 		callAjax = true;
 		break;
 
+		case "getTNSummary":
+			var parser = new aiesec.parser();
+
+			parserRequest.success = function(data) {
+				var result = parser.parseTNSummary(data);
+				sendResponse(result);
+			};
+
+			parserRequest.error = function(data) {
+				console.log("ERROR");
+				var jxhr = data;
+			};
+
+		callAjax = true;
+		break;
+
 		case "getNationalList":
 			var parser = new aiesec.parser();
 

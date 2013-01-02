@@ -18,19 +18,72 @@ var aiesec = (function(aiesec, undefined) {
 		var self = {};		
 		var api = new aiesec.api();
 		var SEARCH_RESULTS_KEY = "searchResults";
+		var TN_MONITOR_KEY = "monitoredTNs";
 
 		var scopesDictionary = {1: "AIESEC International", 2: "Region", 3: "Country"};
 		var scopesArray = [{name:"AIESEC International", scopeValue: 1},{name: "Region", scopeValue: 2}, {name:"Country", scopeValue: 3}];
 
-		var TNWrapper = function(data) {
-			var self = {};
+		self.unmonitorTn = function(TN) {
+			TN.isBeingMonitored(false);
+			
+			chrome.storage.local.get( TN_MONITOR_KEY, function(TNsHashMap) {
+				if(!TNsHashMap[TN_MONITOR_KEY]) {
+        			// First time, we need to ensure there's a map to hold our results.
+        			TNsHashMap = {};
+        			TNsHashMap[TN_MONITOR_KEY]= {};
+        		}
 
-			self.about = ko.observable(data.about);
-			self.department = ko.observable(data.department);
-			self.description = ko.observable(data.description);
+        		var TNsHashMapObject = TNsHashMap[TN_MONITOR_KEY];
+        		delete TNsHashMapObject[TN.id];
 
-			return self;
+        		var TNsHashMapObjectTemp = {};
+        		TNsHashMapObjectTemp[TN_MONITOR_KEY] = TNsHashMapObject;
+        			
+        		chrome.storage.local.set( TNsHashMapObjectTemp, function() { 
+        			var TNObject = {};
+        			TNObject[TN.id] = {isMonitored: true};
+        			chrome.storage.local.remove( TNObject, function() {
+        				// We added a flag indicating we are storing a TN
+        				console.log("Removed TN successfully");
+        			});
+				});
+        	});
 		}
+
+		self.monitorTn = function(TN) {
+			TN.isBeingMonitored(true);
+			chrome.storage.local.get( TN_MONITOR_KEY, function(TNsHashMap) {
+				if(!TNsHashMap[TN_MONITOR_KEY]) {
+        			// First time, we need to ensure there's a map to hold our results.
+        			TNsHashMap = {};
+        			TNsHashMap[TN_MONITOR_KEY]= {};
+        		}
+
+        		var TNsHashMapObject = TNsHashMap[TN_MONITOR_KEY];
+        		TNsHashMapObject[TN.id] = TN;
+
+        		var TNsHashMapObjectTemp = {};
+        		TNsHashMapObjectTemp[TN_MONITOR_KEY] = TNsHashMapObject;
+        			
+        		chrome.storage.local.set( TNsHashMapObjectTemp, function() { 
+        			var TNObject = {}
+        			TNObject[TN.id] = true;
+        			chrome.storage.local.set( TNObject, function() {
+        				// We added a flag indicating we are storing a TN
+        				console.log("Added TN successfully");
+        			});
+				});
+        	});
+		}
+
+		self.isBeingMonitored = function(TN) {
+			TN.isBeingMonitored = ko.observable(false);
+			chrome.storage.local.get( TN.id, function( result ) {
+				if( result[TN.id] ) {
+					TN.isBeingMonitored(true);
+				} 
+			});
+		};
 
 		var SearchResultCollection = function(id, timestamp, searchResults, categories, results) {
 			var self = {};
@@ -97,14 +150,15 @@ var aiesec = (function(aiesec, undefined) {
 					TNId: selectedTN.databaseId
 				};
 				self.selectedTN(selectedTN);
-				api.searchTN(params, self.TNDumpObject);	
+				api.searchTN(params, true, self.TNDumpObject);	
 			}
 			return false;
 		}
 
 		self.clearSavedSearches = function() {
-			chrome.storage.local.clear();
-			self.loadSearchCollections();
+			chrome.storage.local.remove(SEARCH_RESULTS_KEY, function() {
+        		self.loadSearchCollections();
+        	});
 		}
 
 		self.loadSavedSearchResult = function(savedResult) {
@@ -163,6 +217,7 @@ var aiesec = (function(aiesec, undefined) {
 			var observedBackgrounds = $.map(value, function(background) {
 				background.tnSummary = ko.observable();
 				background.showTNSummary = ko.observable(false);
+				self.isBeingMonitored(background);
 				return background;
 			});
 
